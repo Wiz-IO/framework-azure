@@ -1,0 +1,20 @@
+{
+    "SchemaVersion": 1,
+    "Name": "",
+    "ComponentId": "",
+    "EntryPoint": "",
+    "CmdArgs": [],
+    "Capabilities": {
+        "AllowedConnections" : [],
+        "AllowedTcpServerPorts": [],
+        "AllowedUdpServerPorts": [],
+        "DeviceAuthentication": "",
+        "Gpio": [],
+        "Uart": [ ],        
+        "I2cMaster": [],
+        "SpiMaster": [],
+        "MutableStorage" : {},
+        "SystemTime" : true,
+        "WifiConfig" : true
+    }
+}
