@@ -8,12 +8,10 @@
         "AllowedConnections" : [],
         "AllowedTcpServerPorts": [],
         "AllowedUdpServerPorts": [],
-        "DeviceAuthentication": "",
         "Gpio": [],
-        "Uart": [ ],        
+        "Uart": [],        
         "I2cMaster": [],
         "SpiMaster": [],
-        "MutableStorage" : {},
         "SystemTime" : true,
         "WifiConfig" : true
     }
