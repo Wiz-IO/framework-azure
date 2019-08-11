@@ -15,7 +15,7 @@
             "// and provides the header definition and application manifest values required to use them."
         ]
     },
-    "Imports" : [ {"Path": "../mt3620/mt3620.json"} ],
+    "Imports" : [ {"Path": "mt3620.json"} ],
     "Peripherals": [
         {"Name": "AVNET_AESMS_PIN5_GPIO0", "Type": "Gpio", "Mapping": "MT3620_GPIO0", "Comment": "AES-MS-MT3620 pin 5 exposes GPIO 0."},
         {"Name": "AVNET_AESMS_PIN6_GPIO1", "Type": "Gpio", "Mapping": "MT3620_GPIO1", "Comment": "AES-MS-MT3620 pin 6 exposes GPIO 1."},

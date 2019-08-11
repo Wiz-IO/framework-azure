@@ -18,7 +18,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "applibs_versions.h"
 #include <applibs/gpio.h>
 #include <applibs/log.h>
 #include "epoll_timerfd_utilities.h"

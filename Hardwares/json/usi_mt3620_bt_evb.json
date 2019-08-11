@@ -15,7 +15,7 @@
             "// USI MT3620 Bluetooth (BT) Evaluation Board (EVB)"
         ]
     },
-    "Imports" : [ {"Path": "../usi_mt3620_bt_combo/usi_mt3620_bt_combo.json"} ],
+    "Imports" : [ {"Path": "usi_mt3620_bt_combo.json"} ],
     "Peripherals": [
         {"Name": "USI_MT3620_BT_EVB_J32_PIN1_GPIO0", "Type": "Gpio", "Mapping": "USI_MT3620_BT_COMBO_PIN69_GPIO0", "Comment": "GPIO0 is exposed on J32 pin1."},
         {"Name": "USI_MT3620_BT_EVB_J32_PIN2_GPIO1", "Type": "Gpio", "Mapping": "USI_MT3620_BT_COMBO_PIN68_GPIO1", "Comment": "GPIO1 is exposed on J32 pin2."},

@@ -15,7 +15,7 @@
             "// Seeed MT3620 Mini Development Board (MDB)"
         ]
     },
-    "Imports" : [ {"Path": "../ailink_wfm620rsc1/ailink_wfm620rsc1.json"} ],
+    "Imports" : [ {"Path": "ailink_wfm620rsc1.json"} ],
     "Peripherals": [
         {"Name": "SEEED_MT3620_MDB_USER_LED", "Type": "Gpio", "Mapping": "AILINK_WFM620RSC1_PIN4_GPIO7", "Comment": "User LED uses GPIO7."},
         {"Name": "SEEED_MT3620_MDB_J1_PIN1_GPIO4", "Type": "Gpio", "Mapping": "AILINK_WFM620RSC1_PIN1_GPIO4", "Comment": "GPIO4 is exposed on J1 pin 1."},

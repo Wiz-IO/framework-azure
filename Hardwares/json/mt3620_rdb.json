@@ -15,7 +15,7 @@
             "// MT3620 Reference Development Board (RDB)"
         ]
     },
-    "Imports" : [ {"Path": "../mt3620/mt3620.json"} ],
+    "Imports" : [ {"Path": "mt3620.json"} ],
     "Peripherals": [
         {"Name": "MT3620_RDB_LED1_RED", "Type": "Gpio", "Mapping": "MT3620_GPIO8", "Comment": "LED 1 Red channel uses GPIO8."},
         {"Name": "MT3620_RDB_LED1_GREEN", "Type": "Gpio", "Mapping": "MT3620_GPIO9", "Comment": "LED 1 Green channel uses GPIO9"},

@@ -15,7 +15,7 @@
             "// and provides the header definition and application manifest values required to use them."
         ]
     },
-    "Imports" : [ {"Path": "../mt3620/mt3620.json"} ],
+    "Imports" : [ {"Path": "mt3620.json"} ],
     "Peripherals": [
         {"Name": "AILINK_WFM620RSC1_PIN1_GPIO41", "Type": "Gpio", "Mapping": "MT3620_GPIO41", "Comment": "WF-M620-RSC1 pin 1 exposes GPIO 41. Pin shared with GPIO4."},
         {"Name": "AILINK_WFM620RSC1_PIN1_GPIO4", "Type": "Gpio", "Mapping": "MT3620_GPIO4", "Comment": "WF-M620-RSC1 pin 1 exposes GPIO 4. Pin shared with GPIO41."},

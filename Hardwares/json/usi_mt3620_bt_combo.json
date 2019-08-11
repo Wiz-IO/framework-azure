@@ -15,7 +15,7 @@
             "// and provides the header definition and application manifest values required to use them."
         ]
     },
-    "Imports" : [ {"Path": "../mt3620/mt3620.json"} ],
+    "Imports" : [ {"Path": "mt3620.json"} ],
     "Peripherals": [
         {"Name": "USI_MT3620_BT_COMBO_NRF52_RESET", "Type": "Gpio", "Mapping": "MT3620_GPIO22", "Comment": "The internal connection to the BT_nRST signal on nRF52810 from MT3620 GPIO 22. USI-MT3620-BT-COMBO U1B pin 37 also exposes this signal."},
         {"Name": "USI_MT3620_BT_COMBO_NRF52_DFU", "Type": "Gpio", "Mapping": "MT3620_GPIO23", "Comment": "The internal connection to the BT_FW_EN signal on nRF52810 from MT3620 GPIO 23. USI-MT3620-BT-COMBO U1B pin 38 also exposes this signal."},

@@ -1,7 +1,7 @@
 {
     "name": "framework-azure",
     "description": "Azure Sphere Frameworks for PlatformIO 2019 Georgi Angelov",
-    "url": "https://github.com/Wiz-IO/framework-azure",
+    "url": "",
     "system": "*",
     "version": "1.0.0"
 }
