@@ -74,10 +74,7 @@ extern "C"
         __asm("cpsie i"); \
     } while (0)
 
-
-//#define _htons(x) ((unsigned short)((((unsigned short)(x) & 0x00ff) << 8) | (((unsigned short)(x) & 0xff00) >> 8)))
-//#define _ntohs(x) ((unsigned short)((((unsigned short)(x) & 0x00ff) << 8) | (((unsigned short)(x) & 0xff00) >> 8)))
-//int inet_ntoa(const unsigned int inaddr, unsigned char *buf, unsigned int len);
+void waitWifi(void);
 
 #ifdef __cplusplus
 } 
