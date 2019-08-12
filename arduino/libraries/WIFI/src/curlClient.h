@@ -1,20 +1,21 @@
 /*
-  Copyright (c) 2013-2014 Arduino LLC. All right reserved.
-
+    Created on: 01.01.2019
+    Author: Georgi Angelov
+        http://www.wizio.eu/
+        https://github.com/Wiz-IO    
+		
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA   
+ */
 
 #ifndef curlClient_H_
 #define curlClient_H_
@@ -98,10 +99,20 @@ public:
       }
       CURL_SETOPT(CURLOPT_WRITEFUNCTION, StoreDownloadedDataCallback);
       CURL_SETOPT(CURLOPT_WRITEDATA, (void *)&block);
-      CURL_SETOPT(CURLOPT_USERAGENT, "libcurl-agent/1.0");  
-      CURL_SETOPT(CURLOPT_FOLLOWLOCATION, 1L);    
+      CURL_SETOPT(CURLOPT_USERAGENT, "libcurl-agent/1.0");
+      CURL_SETOPT(CURLOPT_FOLLOWLOCATION, 1L);
     }
     return res;
+  }
+
+  int begin(const char *url)
+  {
+    int rc = -1;
+    if (url && CURLE_OK == (rc = begin()))
+    {
+      CURL_SETOPT(CURLOPT_URL, url);
+    }
+    return rc;
   }
 
   int run(MemoryBlock **data)
@@ -134,8 +145,6 @@ public:
     }
   }
 #endif
-
-
 };
 
 #endif /* curlClient_H_ */
