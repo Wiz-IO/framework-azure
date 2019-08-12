@@ -24,7 +24,10 @@
 #include <curl/curl.h>
 #include <applibs/networking.h>
 #include <applibs/storage.h>
-#include <applibs/log.h>
+
+#include <variant.h>
+#define DEBUG_CURL 
+//Serial.printf
 
 #define CURL_SETOPT(O, P) setopt(O, (void *)P)
 
@@ -43,12 +46,13 @@ private:
 
   static size_t StoreDownloadedDataCallback(void *chunks, size_t chunkSize, size_t chunksCount, void *memoryBlock)
   {
+    //DEBUG_CURL("[CURL] callback\n");
     MemoryBlock *block = (MemoryBlock *)memoryBlock;
     size_t additionalDataSize = chunkSize * chunksCount;
     block->data = (char *)realloc(block->data, block->size + additionalDataSize + 1);
     if (block->data == NULL)
     {
-      //Log_Debug("Out of memory, realloc returned NULL: errno=%d (%s)'n", errno, strerror(errno));
+      DEBUG_CURL("[ERROR] CURL callback\n");
       abort();
     }
     memcpy(block->data + block->size, chunks, additionalDataSize);
@@ -67,22 +71,40 @@ public:
 
   void end()
   {
-    free(block.data);              // Clean up allocated memory.
-    free(certificatePath);         //
-    curl_easy_cleanup(curlHandle); // Clean up sample's cURL resources.
-    curl_global_cleanup();         // Clean up cURL library's resources.
-    curlHandle = NULL;
+    if (block.data)
+    {
+      free(block.data); // Clean up allocated memory.
+      block.data = NULL;
+      block.size = 0;
+    }
+    if (certificatePath)
+    {
+      free(certificatePath);
+      certificatePath = NULL;
+    }
+    if (curlHandle)
+    {
+      curl_easy_cleanup(curlHandle); // Clean up sample's cURL resources.
+      curl_global_cleanup();         // Clean up cURL library's resources.
+      curlHandle = NULL;
+    }
+    //DEBUG_CURL("[CURL] end()\n");
   }
 
   int setopt(CURLoption opt, void *param)
   {
     int res = -1;
     if (curlHandle)
-      if ((res = curl_easy_setopt(curlHandle, opt, param)) != CURLE_OK) //0
+    {
+      if ((res = curl_easy_setopt(curlHandle, opt, param)) != CURLE_OK) // 0
       {
-        //LogError();
-        end();
+        DEBUG_CURL("[ERROR] curl_easy_setopt\n");
       }
+      else
+      {
+        //DEBUG_CURL("[CURL] SETOPT: %d = 0x%08X\n", (int)opt, param);
+      }
+    }
     return res;
   }
 
@@ -93,14 +115,18 @@ public:
     {
       if ((curlHandle = curl_easy_init()) == NULL)
       {
-        //Log_Debug("curl_easy_init() failed\n");
+        DEBUG_CURL("[ERROR] curl_easy_init\n");
         end();
         res = -1;
       }
       CURL_SETOPT(CURLOPT_WRITEFUNCTION, StoreDownloadedDataCallback);
-      CURL_SETOPT(CURLOPT_WRITEDATA, (void *)&block);
-      CURL_SETOPT(CURLOPT_USERAGENT, "libcurl-agent/1.0");
+      CURL_SETOPT(CURLOPT_WRITEDATA, &block);
+      CURL_SETOPT(CURLOPT_USERAGENT, "AzureSphere");
       CURL_SETOPT(CURLOPT_FOLLOWLOCATION, 1L);
+    }
+    else
+    {
+      DEBUG_CURL("[ERROR] curl_global_init\n");
     }
     return res;
   }
@@ -110,6 +136,7 @@ public:
     int rc = -1;
     if (url && CURLE_OK == (rc = begin()))
     {
+      //DEBUG_CURL("[CURL] SETOPT URL: %s\n", url);
       CURL_SETOPT(CURLOPT_URL, url);
     }
     return rc;
@@ -117,31 +144,36 @@ public:
 
   int run(MemoryBlock **data)
   {
-    int res = -1;
+    int rc = -1;
     if (curlHandle)
-      if ((res = curl_easy_perform(curlHandle)) != CURLE_OK)
+    {
+      //DEBUG_CURL("[CURL] run()\n");
+      if ((rc = curl_easy_perform(curlHandle)) != CURLE_OK)
       {
-        //LogCurlError();
+        DEBUG_CURL("[ERROR] curl_easy_perform: %d\n", rc);
+        end();
+        *data = NULL;
       }
       else
       {
-        //Log_Debug("\n -===- Downloaded content (%zu bytes): -===-\n", block.size);
-        //Log_Debug("%s\n", block.data);
+        //DEBUG_CURL("\n -===- Downloaded content (%zu bytes): -===-\n", block.size);
         *data = &block;
       }
-    return res;
+    }
+    return rc;
   }
 
 #ifdef SYSROOT_2_BETA1905
   void storage(const char *path)
   {
-    // Get the full path to the certificate file used to authenticate the HTTPS server identity.
-    // The DigiCertGlobalRootCA.pem file is the certificate that is used to verify the server identity.
-    // certificatePath = Storage_GetAbsolutePathInImagePackage(path); // ?!?! "certs/DigiCertGlobalRootCA.pem" 2+Beta1905
+    certificatePath = Storage_GetAbsolutePathInImagePackage(path); // 2+Beta1905 "certs/DigiCertGlobalRootCA.pem"
     if (certificatePath == NULL)
     {
-      Log_Debug("The certificate path could not be resolved: errno=%d (%s)\n", errno, strerror(errno));
-      end();
+      DEBUG_CURL("[ERROR] The certificate path could not be resolved\n");
+    }
+    else
+    {
+      CURL_SETOPT(CURLOPT_CAINFO, path);
     }
   }
 #endif
