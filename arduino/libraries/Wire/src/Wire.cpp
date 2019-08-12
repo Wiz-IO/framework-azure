@@ -33,7 +33,8 @@ extern "C"
 #include <applibs/i2c.h>
 
 #include <variant.h>
-#define DEBUG_I2C Serial.printf
+#define DEBUG_I2C 
+//Serial.printf
 
 uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
 uint8_t TwoWire::rxBufferIndex = 0;
@@ -56,6 +57,7 @@ void TwoWire::begin()
   txBufferIndex = 0;
   txBufferLength = 0;
   fd = I2CMaster_Open(id);
+  DEBUG_I2C("[I2C] I2CMaster_Open = %d\n", fd);
 }
 
 void TwoWire::end(void){}
@@ -65,7 +67,7 @@ void TwoWire::setClock(uint32_t frequency)
   int rc = I2CMaster_SetBusSpeed(fd, I2C_BUS_SPEED_STANDARD);
   if (rc != 0)
   {
-    DEBUG_I2C("[ERROR] I2C I2CMaster_SetBusSpeed");
+    DEBUG_I2C("[ERROR] I2CMaster_SetBusSpeed\n");
   }
 }
 
@@ -74,7 +76,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop
   if (quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
   uint8_t rd = I2CMaster_Read(fd, (I2C_DeviceAddress)address, (uint8_t *)rxBuffer, quantity);
-  DEBUG_I2C("[I2C] I2C I2CMaster_Read = %d", (int)rd);
+  DEBUG_I2C("[I2C] I2CMaster_Read = %d\n", (int)rd);
   rxBufferIndex = 0;
   rxBufferLength = (rd == 0) ? quantity : 0;
   return rxBufferLength;
@@ -90,7 +92,7 @@ void TwoWire::beginTransmission(uint8_t address)
 uint8_t TwoWire::endTransmission(uint8_t sendStop)
 {
   uint8_t wr = I2CMaster_Write(fd, (I2C_DeviceAddress)txAddress, (uint8_t *)txBuffer, txBufferLength);
-  DEBUG_I2C("[I2C] I2C I2CMaster_Write = %d", (int)wr);
+  DEBUG_I2C("[I2C] I2CMaster_Write = %d\n", (int)wr);
   txBufferIndex = 0;
   txBufferLength = 0;
   return wr;
@@ -156,5 +158,5 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity)
   return requestFrom(address, quantity, (uint8_t) true);
 }
 
-TwoWire Wire = TwoWire(AVNET_AESMS_ISU1_I2C);
-TwoWire Wire1 = TwoWire(AVNET_AESMS_ISU2_I2C);
+TwoWire Wire = TwoWire(AVNET_AESMS_ISU2_I2C);
+TwoWire Wire1 = TwoWire(AVNET_AESMS_ISU1_I2C);
