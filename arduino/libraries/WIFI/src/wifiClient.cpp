@@ -145,12 +145,6 @@ int wifiClient::connect(IPAddress ip, uint16_t port)
 
 size_t wifiClient::write(uint8_t b)
 {
-	if (_sock < 0)
-	{
-		DEBUG_CLIENT("[ERROR] TCP write() sock\n");
-		return 0;
-	}
-	//DEBUG_CLIENT("[TCP] write(1) %02X\n", (int)b & 0xFF);
 	return write(&b, 1);
 }
 
@@ -170,30 +164,8 @@ size_t wifiClient::write(const uint8_t *buf, size_t size)
 
 int wifiClient::read()
 {
-	if (_sock < 0)
-	{
-		DEBUG_CLIENT("[ERROR] TCP read() sock\n");
-		return -1;
-	}
-	//DEBUG_CLIENT("[TCP] read(1)\n");
-	char b;
-	if (_peeked)
-	{
-		//DEBUG_CLIENT("[TCP] read(1) _ring = 0x%02X\n", _ring & 0xFF);
-		_peeked = 0;
-		return _ring & 0xFF;
-	}
-	//DEBUG_CLIENT("[TCP] read(1) try recv(1)\n");
-	if (::recv(_sock, &b, 1, 0) > 0)
-	{
-		//DEBUG_CLIENT("[TCP] read(1) recv = 0x%02X\n", (int)b & 0xFF);
-		return b;
-	}
-	else
-	{
-		DEBUG_CLIENT("[ERROR] TCP read(1) recv\n");
-		return -1;
-	}
+	uint8_t b;
+	return read(&b, 1) == 1 ? b : -1;
 }
 
 int wifiClient::read(uint8_t *buf, size_t size)
