@@ -1,2 +1,0 @@
-#define O_NONBLOCK    04000
-#define O_CLOEXEC  02000000
