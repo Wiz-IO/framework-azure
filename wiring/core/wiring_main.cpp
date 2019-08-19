@@ -29,8 +29,9 @@ extern "C" void RTCoreMain(void)
 {
     *(volatile uint32_t *)(0xE000ED08) = (uint32_t)ExceptionVectorTable; // SCB->VTOR = ExceptionVectorTable
     __libc_init_array();
-    SysTick_Config(24000); // 1 ms ISR
-    init();
+    /* MAYBE IS 26000, will test soon */
+    SysTick_Config(24000);  // 1 mSec isr 
+    init();                 // variant
     setup();
     while (1)
     {
