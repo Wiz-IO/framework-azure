@@ -26,23 +26,24 @@
 class HardwareSerial : public Stream
 {
 private:
-	uint32_t uart_base;
+  uint32_t uart_base;
 
 public:
-	HardwareSerial(uint32_t base) { 
-    uart_base = base; 
+  HardwareSerial(uint32_t base)
+  {
+    uart_base = base;
   };
-	~HardwareSerial(){};
+  ~HardwareSerial(){};
   void begin(); /* Configure UART to use 115200-8-N-1 */
-	void begin(unsigned long); /* NEED INFO ABOUT SETTINGS 115200-8-N-1 */
-	void end(void){}
-	virtual int available(void);
-	virtual int peek(void);
-	virtual int read(void);
-	virtual void flush(void){};
-	virtual size_t write(uint8_t);
-	using Print::write;
-	operator bool() { return true; }
+  void begin(unsigned long); 
+  void end(void) {}
+  virtual int available(void);
+  virtual int peek(void);
+  virtual int read(void);
+  virtual void flush(void){};
+  virtual size_t write(uint8_t);
+  using Print::write;
+  operator bool() { return true; }
 
   void Write(const char *msg);
 };
