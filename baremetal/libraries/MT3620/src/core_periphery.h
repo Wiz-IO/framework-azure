@@ -16,6 +16,8 @@
 #define UART_BASE               (0x38070500) /* UartIsu0 = 0x38070500 */
 #define DEBUG_BASE              (0x21040000) /* UartCM4Debug = 0x21040000 */
 
+#define UART_CLOCK_FREQ         (26000000)
+
 #define   UART_DATA_MASK        (0x0003)
 #define   UART_PARITY_MASK      (0x0038)
 #define   UART_STOP_MASK        (0x0004)
@@ -88,6 +90,8 @@
 #define UART_IER_ETBEI          (0x2UL)
 #define UART_IER_ERBFI          (0x1UL)
 
+/// UartSetFormat(uart_base, brg, UART_WLS_8, UART_NONE_PARITY, UART_1_STOP); 
+int Uart_SetFormat(uint32_t BASE, uint32_t baudrate, uint16_t databit, uint16_t parity, uint16_t stopbit);
 
 /* GPT ********************************************************************************/
 #define  GPT_BASE 0x21030000
