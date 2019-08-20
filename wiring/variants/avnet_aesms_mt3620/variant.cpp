@@ -8,4 +8,5 @@
 
 extern "C" void init(void);
 
-HardwareSerial Serial(AVNET_AESMS_ISU0_UART); 
+HardwareSerial Serial(UART_BASE); 
+HardwareSerial Serial1(DEBUG_BASE); 
