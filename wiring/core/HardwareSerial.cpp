@@ -19,17 +19,23 @@
 
 #include "HardwareSerial.h"
 
-void HardwareSerial::begin() // Configure UART to use 115200-8-N-1.
+void HardwareSerial::begin(unsigned long brg)
 {
-    WriteReg32(UART_BASE, 0x0C, 0x80); // LCR (enable DLL, DLM)
-    WriteReg32(UART_BASE, 0x24, 0x3);  // HIGHSPEED
-    WriteReg32(UART_BASE, 0x04, 0);    // Divisor Latch (MS)
-    WriteReg32(UART_BASE, 0x00, 1);    // Divisor Latch (LS)
-    WriteReg32(UART_BASE, 0x28, 224);  // SAMPLE_COUNT
-    WriteReg32(UART_BASE, 0x2C, 110);  // SAMPLE_POINT
-    WriteReg32(UART_BASE, 0x58, 0);    // FRACDIV_M
-    WriteReg32(UART_BASE, 0x54, 223);  // FRACDIV_L
-    WriteReg32(UART_BASE, 0x0C, 0x03); // LCR (8-bit word length)
+    Uart_SetFormat(uart_base, brg, UART_WLS_8, UART_NONE_PARITY, UART_1_STOP);
+}
+
+// Configure UART to use 115200-8-N-1.
+void HardwareSerial::begin()
+{
+    WriteReg32(uart_base, 0x0C, 0x80); // LCR (enable DLL, DLM)
+    WriteReg32(uart_base, 0x24, 0x3);  // HIGHSPEED
+    WriteReg32(uart_base, 0x04, 0);    // Divisor Latch (MS)
+    WriteReg32(uart_base, 0x00, 1);    // Divisor Latch (LS)
+    WriteReg32(uart_base, 0x28, 224);  // SAMPLE_COUNT
+    WriteReg32(uart_base, 0x2C, 110);  // SAMPLE_POINT
+    WriteReg32(uart_base, 0x58, 0);    // FRACDIV_M
+    WriteReg32(uart_base, 0x54, 223);  // FRACDIV_L
+    WriteReg32(uart_base, 0x0C, 0x03); // LCR (8-bit word length)
 }
 
 void HardwareSerial::Write(const char *msg)
@@ -37,20 +43,20 @@ void HardwareSerial::Write(const char *msg)
     while (*msg)
     {
         // When LSR[5] ->THRE is set, can write another character.
-        while (!(ReadReg32(UART_BASE, 0x14) & (UINT32_C(1) << 5)))
+        while (!(ReadReg32(uart_base, 0x14) & (UINT32_C(1) << 5)))
         {
         }
-        WriteReg32(UART_BASE, 0x0, *msg++);
+        WriteReg32(uart_base, 0x0, *msg++);
     }
 }
 
 size_t HardwareSerial::write(uint8_t c)
 {
     // When LSR[5] ->THRE is set, can write another character.
-    while (!(ReadReg32(UART_BASE, 0x14) & (UINT32_C(1) << 5)))
+    while (!(ReadReg32(uart_base, 0x14) & (UINT32_C(1) << 5)))
     {
     }
-    WriteReg32(UART_BASE, 0x0, c);
+    WriteReg32(uart_base, 0x0, c);
 }
 
 int HardwareSerial::read(void)
