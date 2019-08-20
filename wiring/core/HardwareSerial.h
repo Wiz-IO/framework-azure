@@ -26,13 +26,15 @@
 class HardwareSerial : public Stream
 {
 private:
-	int id;
+	uint32_t uart_base;
 
 public:
-	HardwareSerial(int port_id) { id = port_id; };
+	HardwareSerial(uint32_t base) { 
+    uart_base = base; 
+  };
 	~HardwareSerial(){};
   void begin(); /* Configure UART to use 115200-8-N-1 */
-	void begin(unsigned long){} /* NEED INFO ABOUT SETTINGS 115200-8-N-1 */
+	void begin(unsigned long); /* NEED INFO ABOUT SETTINGS 115200-8-N-1 */
 	void end(void){}
 	virtual int available(void);
 	virtual int peek(void);
