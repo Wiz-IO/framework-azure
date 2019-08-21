@@ -24,7 +24,7 @@ void delayMicroseconds(unsigned int us)
 {
 	struct timespec st;
 	st.tv_sec = 0;
-	st.tv_nsec = us * 1000;
+	st.tv_nsec = us * 1000000;
 	nanosleep(&st, NULL);
 }
 
@@ -32,7 +32,7 @@ void delay(unsigned int ms)
 {
 	struct timespec st;
 	st.tv_sec = ms / 1000;
-	st.tv_nsec = ms * 1000;
+	st.tv_nsec = ms * 1000000;
 	nanosleep(&st, NULL);
 }
 
