@@ -23,7 +23,7 @@ extern "C"
 #define LED 9
 #define LED_BUILTIN 9
 
-#define PINS_MAX 20 /* TODO */
+#define PINS_MAX 76
 
     typedef struct
     {
