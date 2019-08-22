@@ -29,23 +29,32 @@
 class HardwareSerial : public Stream
 {
 private:
-	int fd;
-	UART_Id id;
+  int fd;
+  UART_Id id;
+
+  /// NOT EXIST ioctl(serial_fd, FIONREAD, &bytes_avail);
+  /// max 8 bytes - for available() and peek()
+  uint64_t ring_buffer;
+  int ring_count;
+  char get(void); // ring get one
 
 public:
-	HardwareSerial(int port_id) { id = (UART_Id)port_id; };
-	~HardwareSerial(){};
-	void begin(unsigned long);
-	void end(void);
-	virtual int available(void);
-	virtual int peek(void);
-	virtual int read(void);
-	virtual void flush(void){};
-	virtual size_t write(uint8_t);
-	using Print::write;
-	operator bool() { return true; }
+  HardwareSerial(int port_id);
+  ~HardwareSerial(){};
+  void begin(UART_Config *pUartConfig);
+  void begin(unsigned long);
+  void end(void){}; // close NOT EXIST
+  virtual int available(void);
+  virtual int peek(void);
+  virtual int read(void);
+  virtual int read(char *buf, int size);
+  virtual void flush(void);
+  virtual size_t write(uint8_t);
+  using Print::write;
+  operator bool() { return true; }
 };
 
 extern HardwareSerial Serial;
+extern HardwareSerial Serial1;
 
 #endif
