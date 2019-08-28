@@ -45,8 +45,8 @@ extern "C"
 
     extern volatile unsigned int systick;
     static inline unsigned int millis(void) { return systick; }
-    static inline unsigned int micros(void) { return systick / 1000; }
-
+    //static inline unsigned int micros(void) { return systick / 1000; }
+    //unsigned int micros(void);
     unsigned int seconds(void);
 
     void delay(unsigned int);
