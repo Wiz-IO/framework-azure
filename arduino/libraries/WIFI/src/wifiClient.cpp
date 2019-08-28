@@ -26,13 +26,13 @@
 
 #include <variant.h>
 #define DEBUG_CLIENT 
-// Serial.printf
+//Serial.printf
 
-wifiClient::wifiClient() : _sock(-1), connect_true(0), _ring(0), _peeked(0)
+wifiClient::wifiClient() : _sock(-1), connect_true(0)
 {
 }
 
-wifiClient::wifiClient(uint8_t sock) : _sock(-1), connect_true(1), _ring(0), _peeked(0)
+wifiClient::wifiClient(uint8_t sock) : _sock(-1), connect_true(1)
 {
 }
 
@@ -43,14 +43,12 @@ void wifiClient::stop()
 	connect_true = false;
 	::close(_sock);
 	_sock = -1;
-	_ring = _peeked = 0;
-	//DEBUG_CLIENT("[TCP] stop()\n");
 }
 
 static int _connect(int sock, struct sockaddr_in *psin, unsigned int len, uint32_t timeout)
 {
 	int ret;
-/*	
+	/*	
 	DEBUG_CLIENT("[TCP] IP: %d.%d.%d.%d : %d\n",
 				 (int)((psin->sin_addr.s_addr) & 0xFF),
 				 (int)((psin->sin_addr.s_addr >> 8) & 0xFF),
@@ -79,7 +77,6 @@ int wifiClient::connect(const char *host, uint16_t port)
 {
 	struct hostent *hp;
 	int ret = 0;
-	//DEBUG_CLIENT("[TCP] Connecting: %s : %d\n", host, (int)port);
 	if (host == NULL || _sock != -1)
 	{
 		DEBUG_CLIENT("[ERROR] TCP socket\n");
@@ -152,10 +149,8 @@ size_t wifiClient::write(const uint8_t *buf, size_t size)
 {
 	if (_sock < 0)
 		return 0;
-	//DEBUG_CLIENT("[TCP] write( %d )\n", size);
 	if (::send(_sock, (char *)buf, size, 0) < 0)
 	{
-		//DEBUG_CLIENT("[ERROR] TCP write send\n");
 		stop();
 		size = 0;
 	}
@@ -172,22 +167,8 @@ int wifiClient::read(uint8_t *buf, size_t size)
 {
 	if (_sock < 0 || 0 == buf || 0 == size)
 		return -1;
-	//DEBUG_CLIENT("[TCP] read( %d )\n", size);
-	int cnt = -1;
-	if (_peeked > 0)
-	{
-		*buf++ = _ring & 0xFF;
-		size--;
-		cnt = 1;
-		_peeked = 0;
-	}
-	if (size)
-	{
-		int rc = ::recv(_sock, (char *)buf, size, 0);
-		if (rc > 0)
-			cnt += rc;
-	}
-	return cnt;
+	int rc = ::recv(_sock, (char *)buf, size, 0);
+	return rc;
 }
 
 int wifiClient::available()
@@ -197,25 +178,8 @@ int wifiClient::available()
 		DEBUG_CLIENT("[ERROR] TCP available sock\n");
 		return 0;
 	}
-#if 0    
-	int cnt = -1; return ( 0 == ioctl(_sock, FIONREAD, &cnt) ) ? cnt : 0; // not exist ioctl()
-#endif
-	if (_peeked)
-	{
-		//DEBUG_CLIENT("[TCP] available _peeked = %d\n", _peeked);
-		return _peeked;
-	}
-	//DEBUG_CLIENT("[TCP] available try recv(1)\n");
-	_ring = 0;
-	_peeked = ::recv(_sock, (char *)&_ring, 1, 0); // try receive
-	if (_peeked > 0)
-	{
-		//DEBUG_CLIENT("[TCP] available recv() = %d\n", _peeked);
-		return _peeked;
-	}
-	//DEBUG_CLIENT("[TCP] available = 0\n");
-	_peeked = 0;
-	return _peeked; // 0
+	int cnt = -1;
+	return (0 == api_ioctl(_sock, FIONREAD, (uint32_t)&cnt)) ? cnt : 0;
 }
 
 int wifiClient::peek()
@@ -225,10 +189,8 @@ int wifiClient::peek()
 		DEBUG_CLIENT("[ERROR] TCP peek sock\n");
 		return -1;
 	}
-	if (_peeked)
-		return *((char *)&_ring);
 	char b;
-	return (recv(_sock, &b, 1, MSG_PEEK) > 0) ? b : -1;
+	return (::recv(_sock, &b, 1, MSG_PEEK) > 0) ? b : -1;
 }
 
 void wifiClient::flush()
@@ -237,7 +199,6 @@ void wifiClient::flush()
 		return;
 	while (available())
 		read();
-	_ring = _peeked = 0;
 }
 
 uint8_t wifiClient::connected()
