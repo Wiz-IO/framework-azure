@@ -76,6 +76,11 @@ extern "C"
 
 void waitWifi(void);
 
+#define FIONREAD    0x541B  /* available */
+#define FIONBIO		0x5421
+#define TCFLSH		0x540B  /* flush serial */
+int api_ioctl(int a, ...);  /* max arg 4, api_ioctl(1, 2, 3, 4) */    
+    
 #ifdef __cplusplus
 } 
 #endif
