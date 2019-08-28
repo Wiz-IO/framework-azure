@@ -31,12 +31,8 @@ class HardwareSerial : public Stream
 private:
   int fd;
   UART_Id id;
-
-  /// NOT EXIST ioctl(serial_fd, FIONREAD, &bytes_avail);
-  /// max 8 bytes - for available() and peek()
-  uint64_t ring_buffer;
-  int ring_count;
-  char get(void); // ring get one
+  int peeked;
+  char pk;
 
 public:
   HardwareSerial(int port_id);
@@ -47,9 +43,8 @@ public:
   virtual int available(void);
   virtual int peek(void);
   virtual int read(void);
-  virtual int read(char *buf, int size);
-  virtual void flush(void);
   virtual size_t write(uint8_t);
+  virtual void flush(void);
   using Print::write;
   operator bool() { return true; }
 };
