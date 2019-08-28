@@ -28,8 +28,7 @@
 class wifiClient : public Client
 {
 private:
-	int _sock, _peeked;
-	volatile uint32_t _ring;
+	int _sock;
 	bool connect_true;
 
 public:
