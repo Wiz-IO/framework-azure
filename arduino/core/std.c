@@ -228,3 +228,16 @@ extern double atof(const char *s)
     sscanf(s, "%lf", &val);
     return val;
 }
+
+/* workaround */
+
+/* original function is not allowed */
+__attribute__((naked)) int api_ioctl(int fd, ...) 
+{
+    __asm volatile(
+        "PUSH   {R7, LR}        \n\t"
+        "MOV    R7, #0x36       \n\t"
+        "SVC    #0              \n\t"
+        "POP    {R7, PC}        \n\t"       
+    );     
+}
