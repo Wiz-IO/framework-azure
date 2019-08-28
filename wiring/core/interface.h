@@ -45,10 +45,9 @@ extern "C"
 
     extern volatile unsigned int systick;
     static inline unsigned int millis(void) { return systick; }
+    static inline unsigned int micros(void) { return systick / 1000; }
 
     unsigned int seconds(void);
-    unsigned int millis(void);
-    //unsigned int micros(void);
 
     void delay(unsigned int);
     #define delayMicroseconds(US) Gpt3_WaitUs(US)
