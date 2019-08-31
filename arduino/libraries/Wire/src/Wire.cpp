@@ -2,8 +2,8 @@
     Created on: 01.01.2019
     Author: Georgi Angelov
         http://www.wizio.eu/
-        https://github.com/Wiz-IO    
-		
+        https://github.com/Wiz-IO
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -14,7 +14,7 @@
   Lesser General Public License for more details.
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA   
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 extern "C"
@@ -33,7 +33,7 @@ extern "C"
 #include <applibs/i2c.h>
 
 #include <variant.h>
-#define DEBUG_I2C 
+#define DEBUG_I2C
 //Serial.printf
 
 uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
@@ -75,10 +75,19 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop
 {
   if (quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
-  uint8_t rd = I2CMaster_Read(fd, (I2C_DeviceAddress)address, (uint8_t *)rxBuffer, quantity);
-  DEBUG_I2C("[I2C] I2CMaster_Read = %d\n", (int)rd);
-  rxBufferIndex = 0;
-  rxBufferLength = (rd == 0) ? quantity : 0;
+
+  ssize_t res = -1;
+  if (txBufferLength > 0) {
+    res = I2CMaster_WriteThenRead(fd, static_cast<I2C_DeviceAddress>(address),
+                                  txBuffer, txBufferLength, rxBuffer, quantity);
+    DEBUG_I2C("[I2C] I2CMaster_WriteThenRead = %d, errno = %d\n", res, errno);
+  } else {
+    res = I2CMaster_Read(fd, static_cast<I2C_DeviceAddress>(address), rxBuffer, quantity);
+    DEBUG_I2C("[I2C] I2CMaster_Read = %d, errno = %d\n", res, errno);
+  }
+
+  rxBufferLength = res < 0 ? 0 : res - txBufferLength;
+  rxBufferIndex = txBufferIndex = txBufferLength = 0;
   return rxBufferLength;
 }
 
@@ -91,6 +100,10 @@ void TwoWire::beginTransmission(uint8_t address)
 
 uint8_t TwoWire::endTransmission(uint8_t sendStop)
 {
+  if (!sendStop) {
+    return 0;
+  }
+
   uint8_t wr = I2CMaster_Write(fd, (I2C_DeviceAddress)txAddress, (uint8_t *)txBuffer, txBufferLength);
   DEBUG_I2C("[I2C] I2CMaster_Write = %d\n", (int)wr);
   txBufferIndex = 0;
