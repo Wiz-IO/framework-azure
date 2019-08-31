@@ -15,7 +15,7 @@
  License along with this library; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
- Modified: Georgi Angelov 
+ Modified: Georgi Angelov
  */
 
 #include "Arduino.h"
@@ -23,8 +23,8 @@
 void delayMicroseconds(unsigned int us)
 {
 	struct timespec st;
-	st.tv_sec = 0;
-	st.tv_nsec = us * 1000000;
+	st.tv_sec = us / 1000000;
+	st.tv_nsec = us % 1000000 * 1000;
 	nanosleep(&st, NULL);
 }
 
@@ -32,7 +32,7 @@ void delay(unsigned int ms)
 {
 	struct timespec st;
 	st.tv_sec = ms / 1000;
-	st.tv_nsec = ms * 1000000;
+	st.tv_nsec = ms % 1000 * 1000000;
 	nanosleep(&st, NULL);
 }
 
@@ -70,7 +70,7 @@ boolean noStopInterrupts(void)
 uint32_t clockCyclesPerMicrosecond(void)
 {
 	// TODO
-	return 500; 
+	return 500;
 }
 
 uint32_t clockCyclesToMicroseconds(uint32_t a)
