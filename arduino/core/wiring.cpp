@@ -23,8 +23,8 @@
 void delayMicroseconds(unsigned int us)
 {
 	struct timespec st;
-	st.tv_sec = 0;
-	st.tv_nsec = us * 1000000;
+	st.tv_sec = us / 1000000;
+	st.tv_nsec = us % 1000000 * 1000;
 	nanosleep(&st, NULL);
 }
 
@@ -32,7 +32,7 @@ void delay(unsigned int ms)
 {
 	struct timespec st;
 	st.tv_sec = ms / 1000;
-	st.tv_nsec = ms * 1000000;
+	st.tv_nsec = ms % 1000 * 1000000;
 	nanosleep(&st, NULL);
 }
 
@@ -40,8 +40,9 @@ void yield(void) {}
 
 unsigned int millis(void)
 {
+	// TODO 0 from begining
 	struct timespec a = {0};
-    clock_gettime(CLOCK_REALTIME, &a);
+    	clock_gettime(CLOCK_REALTIME, &a);
 	return a.tv_sec*1000 + a.tv_nsec/1000000;
 }
 
