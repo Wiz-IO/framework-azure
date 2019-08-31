@@ -2,8 +2,8 @@
     Created on: 01.01.2019
     Author: Georgi Angelov
         http://www.wizio.eu/
-        https://github.com/Wiz-IO    
-		
+        https://github.com/Wiz-IO
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -14,7 +14,7 @@
   Lesser General Public License for more details.
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA   
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #ifndef TwoWire_h
@@ -38,19 +38,20 @@ extern uint8_t TWBR;
 
 class TwoWire : public Stream {
   private:
-    static uint8_t rxBuffer[];
-    static uint8_t rxBufferIndex;
-    static uint8_t rxBufferLength;
-
-    static uint8_t txAddress;
-    static uint8_t txBuffer[];
-    static uint8_t txBufferIndex;
-    static uint8_t txBufferLength;
-    
-    int fd, id;
+    int id;
+    int fd;
+    uint8_t* rxBuffer;
+    size_t rxBufferIndex;
+    size_t rxBufferLength;
+    size_t rxBufferLimit;
+    uint8_t txAddress;
+    uint8_t* txBuffer;
+    size_t txBufferLength;
+    size_t txBufferLimit;
 
   public:
     TwoWire(int port_id);
+    ~TwoWire();
     void begin();
     void end();
     void begin(uint8_t);
@@ -72,10 +73,17 @@ class TwoWire : public Stream {
     inline size_t write(unsigned int n) { return write((uint8_t)n); }
     inline size_t write(int n) { return write((uint8_t)n); }
     using Print::write;
+
+  public:
+    /** \brief Change buffer size limits.
+     *  \param rxLimit read buffer size.
+     *  \param txLimit write buffer size.
+     */
+    void changeBufferLimits(size_t rxLimit, size_t txLimit);
 };
 
 extern TwoWire Wire;
 extern TwoWire Wire1;
 
-#endif 
+#endif
 

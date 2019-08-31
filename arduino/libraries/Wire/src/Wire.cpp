@@ -36,31 +36,52 @@ extern "C"
 #define DEBUG_I2C
 //Serial.printf
 
-uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::rxBufferIndex = 0;
-uint8_t TwoWire::rxBufferLength = 0;
+static constexpr size_t DEFAULT_BUFFER_LIMIT = 32;
 
-uint8_t TwoWire::txAddress = 0;
-uint8_t TwoWire::txBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::txBufferIndex = 0;
-uint8_t TwoWire::txBufferLength = 0;
-
-TwoWire::TwoWire(int port_id) : fd(-1)
+TwoWire::TwoWire(int port_id)
+  : id(port_id)
+  , fd(-1)
+  , rxBuffer(nullptr)
+  , rxBufferLength(0)
+  , rxBufferLimit(0)
+  , txAddress(0)
+  , txBuffer(nullptr)
+  , txBufferLength(0)
+  , txBufferLimit(0)
 {
-  id = port_id;
+}
+
+TwoWire::~TwoWire()
+{
+  end();
 }
 
 void TwoWire::begin()
 {
-  rxBufferIndex = 0;
-  rxBufferLength = 0;
-  txBufferIndex = 0;
-  txBufferLength = 0;
+  if (fd >= 0) {
+    DEBUG_I2C("[I2C] already open\n");
+    return;
+  }
+  changeBufferLimits(DEFAULT_BUFFER_LIMIT, DEFAULT_BUFFER_LIMIT);
   fd = I2CMaster_Open(id);
   DEBUG_I2C("[I2C] I2CMaster_Open = %d\n", fd);
 }
 
-void TwoWire::end(void){}
+void TwoWire::end()
+{
+  if (fd >= 0) {
+    close(fd);
+    fd = -1;
+  }
+  if (rxBuffer != nullptr) {
+    delete[] rxBuffer;
+    rxBufferLimit = 0;
+  }
+  if (txBuffer != nullptr) {
+    delete[] txBuffer;
+    txBufferLimit = 0;
+  }
+}
 
 void TwoWire::setClock(uint32_t frequency)
 {
@@ -73,9 +94,11 @@ void TwoWire::setClock(uint32_t frequency)
 
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
 {
-  if (quantity > BUFFER_LENGTH)
-    quantity = BUFFER_LENGTH;
+  if (txBufferLength > 0 && address != txAddress) {
+    endTransmission(true);
+  }
 
+  quantity = min(quantity, rxBufferLimit);
   ssize_t res = -1;
   if (txBufferLength > 0) {
     res = I2CMaster_WriteThenRead(fd, static_cast<I2C_DeviceAddress>(address),
@@ -86,15 +109,15 @@ uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop
     DEBUG_I2C("[I2C] I2CMaster_Read = %d, errno = %d\n", res, errno);
   }
 
+  rxBufferIndex = 0;
   rxBufferLength = res < 0 ? 0 : res - txBufferLength;
-  rxBufferIndex = txBufferIndex = txBufferLength = 0;
+  txBufferLength = 0;
   return rxBufferLength;
 }
 
 void TwoWire::beginTransmission(uint8_t address)
 {
   txAddress = address;
-  txBufferIndex = 0;
   txBufferLength = 0;
 }
 
@@ -104,11 +127,20 @@ uint8_t TwoWire::endTransmission(uint8_t sendStop)
     return 0;
   }
 
-  uint8_t wr = I2CMaster_Write(fd, (I2C_DeviceAddress)txAddress, (uint8_t *)txBuffer, txBufferLength);
-  DEBUG_I2C("[I2C] I2CMaster_Write = %d\n", (int)wr);
-  txBufferIndex = 0;
+  int res = I2CMaster_Write(fd, static_cast<I2C_DeviceAddress>(txAddress),
+                            txBuffer, txBufferLength);
+  DEBUG_I2C("[I2C] I2CMaster_Write = %d, errno = %d\n", res, errno);
   txBufferLength = 0;
-  return wr;
+
+  if (res < 0) {
+    switch (errno) {
+      case ENXIO:
+        return 3;
+      default:
+        return 4;
+    }
+  }
+  return 0;
 }
 
 uint8_t TwoWire::endTransmission(void)
@@ -118,21 +150,20 @@ uint8_t TwoWire::endTransmission(void)
 
 size_t TwoWire::write(uint8_t data)
 {
-  if (txBufferLength >= BUFFER_LENGTH)
+  if (txBufferLength >= txBufferLimit) {
     return 0;
-  txBuffer[txBufferIndex] = data;
-  ++txBufferIndex;
-  txBufferLength = txBufferIndex;
+  }
+  txBuffer[txBufferLength++] = data;
   return 1;
 }
 
 size_t TwoWire::write(const uint8_t *data, size_t quantity)
 {
-  for (size_t i = 0; i < quantity; ++i)
-  {
-    write(data[i]);
+  size_t count = 0;
+  for (size_t i = 0; i < quantity; ++i) {
+    count += write(data[i]);
   }
-  return quantity;
+  return count;
 }
 
 int TwoWire::available(void)
@@ -169,6 +200,31 @@ void TwoWire::begin(uint8_t address)
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity)
 {
   return requestFrom(address, quantity, (uint8_t) true);
+}
+
+void TwoWire::changeBufferLimits(size_t rxLimit, size_t txLimit)
+{
+  rxLimit = max(1, rxLimit);
+  txLimit = max(1, txLimit);
+
+  if (rxBufferLimit != rxLimit) {
+    if (rxBuffer != nullptr) {
+      delete[] rxBuffer;
+    }
+    rxBufferLimit = rxLimit;
+    rxBuffer = new uint8_t[rxBufferLimit];
+    rxBufferIndex = 0;
+    rxBufferLength = 0;
+  }
+
+  if (txBufferLimit != txLimit) {
+    if (txBuffer != nullptr) {
+      delete[] txBuffer;
+    }
+    txBufferLimit = txLimit;
+    txBuffer = new uint8_t[txBufferLimit];
+    txBufferLength = 0;
+  }
 }
 
 TwoWire Wire = TwoWire(AVNET_AESMS_ISU2_I2C);
