@@ -19,12 +19,13 @@
 
 #include <interface.h>
 
-extern "C" void __libc_init_array(void);
 extern void setup();
 extern void loop();
+extern struct timespec app_start_time;
 
 int main(int argc, char *argv[])
 {
+    clock_gettime(CLOCK_MONOTONIC, &app_start_time);
     setup();
     while (true)
     {
