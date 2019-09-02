@@ -39,6 +39,7 @@ extern "C"
 
 #include <applibs/log.h>
 
+    uint32_t utc(void);
     unsigned int seconds(void);
     unsigned int millis(void);
     unsigned int micros(void);
