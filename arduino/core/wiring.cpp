@@ -16,6 +16,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
  Modified: Georgi Angelov 
+ Modified: Junxiao Shi
  */
 
 #include "Arduino.h"
@@ -36,20 +37,28 @@ void delay(unsigned int ms)
 	nanosleep(&st, NULL);
 }
 
-void yield(void) {}
+uint32_t utc(void)
+{
+    time_t t;
+    time(&t);
+    return t;
+}
 
+struct timespec app_start_time;
 unsigned int millis(void)
 {
-	// TODO 0 from begining
-	struct timespec a = {0};
-    	clock_gettime(CLOCK_REALTIME, &a);
-	return a.tv_sec*1000 + a.tv_nsec/1000000;
+	struct timespec gettime_now;
+	clock_gettime(CLOCK_MONOTONIC, &gettime_now);
+	return ((gettime_now.tv_sec - app_start_time.tv_sec) * 1000 +
+		(gettime_now.tv_nsec - app_start_time.tv_nsec) / 1000000);	
 }
 
 unsigned int seconds(void)
 {
 	return millis() / 1000;
 }
+
+void yield(void) {}
 
 boolean no_interrupt = 1;
 
