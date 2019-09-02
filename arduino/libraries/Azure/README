@@ -1,0 +1,14 @@
+Generate Hmac SAS Token
+
+#include <AzureSAS.h>
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Azure Sphere SAS");
+
+  AzureSAS sas(AZURE_PRIVATE_KEY, String(AZURE_HOST)); // expire Wed, 22 Jan 2025 00:00:00 GMT
+  Serial.println(sas.get());
+
+  sas.create(AZURE_PRIVATE_KEY, String(AZURE_HOST), utc() + 3600); // expire one hour
+  Serial.println(sas.get());  
+}
