@@ -1,0 +1,7 @@
+/*
+    Workaround: Junxiao Shi
+*/
+
+extern "C" {
+#include <stdint.h>
+}
