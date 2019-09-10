@@ -47,6 +47,7 @@ public:
   virtual void flush(void);
   using Print::write;
   operator bool() { return true; }
+  int FD() { return fd; }
 };
 
 extern HardwareSerial Serial;
