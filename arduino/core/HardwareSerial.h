@@ -47,7 +47,10 @@ public:
   virtual void flush(void);
   using Print::write;
   operator bool() { return true; }
+  
   int FD() { return fd; }
+  void redirect(void * file) { int *p = (int *)((char *)file + 60); *p = fd; } // Serial.redirect(stderr); LogDebug()
+  void redirect(void * file, int f) { int *p = (int *)((char *)file + 60); *p = f; } // Serial.redirect(stderr, 2);  
 };
 
 extern HardwareSerial Serial;
