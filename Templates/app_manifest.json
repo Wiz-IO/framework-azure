@@ -5,13 +5,11 @@
     "EntryPoint": "",
     "CmdArgs": [],
     "Capabilities": {
-        "AllowedConnections" : [],
-        "AllowedTcpServerPorts": [],
-        "AllowedUdpServerPorts": [],
-        "Gpio": [],
-        "Uart": [],        
+        "Uart": ["$AVNET_AESMS_ISU0_UART"],  
+        "Gpio": [],               
         "I2cMaster": [],
-        "SpiMaster": [],
+        "SpiMaster": [],               
+        "AllowedConnections" : [],      
         "SystemTime" : true,
         "WifiConfig" : true
     }
