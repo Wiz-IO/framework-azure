@@ -3,7 +3,8 @@
 
 void waitWifi(void)
 {
-    bool outIsNetworkingReady = 0;
-    if (Networking_IsNetworkingReady(&outIsNetworkingReady) < 0 && 0 == outIsNetworkingReady)
-        delay(100);
+    bool outIsNetworkingReady = false;
+    while (Networking_IsNetworkingReady(&outIsNetworkingReady) < 0 || false == outIsNetworkingReady)
+        delay(100); // ~15 seconds on reset
+    delay(10);
 }
