@@ -1,5 +1,5 @@
-#ifndef	_FCNTL_H
-#define	_FCNTL_H
+#ifndef	_EX_FCNTL_H
+#define	_EX_FCNTL_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,7 +18,6 @@ extern "C" {
 #endif
 
 #include <bits/alltypes.h>
-
 #include <bits/fcntl.h>
 
 struct flock
