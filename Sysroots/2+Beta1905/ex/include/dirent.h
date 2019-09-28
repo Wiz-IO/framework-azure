@@ -36,14 +36,12 @@ typedef struct __dirstream DIR;
 #define DT_SOCK 12
 #define DT_WHT 14
 
-// UNKNOW STRUCT
-struct dirent
-{
-	unsigned int ino;
-	unsigned int off;
-	unsigned short len;	
-	char name[256];     // UNKNOW size
-    unsigned char type;
+struct dirent {
+	ino_t d_ino;
+	off_t d_off;
+	unsigned short d_reclen;
+	unsigned char d_type;
+	char d_name[256];
 };
 
 int            closedir(DIR *);
