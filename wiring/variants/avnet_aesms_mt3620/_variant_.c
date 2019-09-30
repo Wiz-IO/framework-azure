@@ -18,7 +18,7 @@
   ISU4 = GPIO_71 to GPIO_75 (0x380B0000) 
   ADC  = GPIO_41 to GPIO_48 (0x38000000)
     
-static const GpioBlock gpio_block_0 = { .baseAddr = 0x38000000, .type = GpioBlock_ADC, .firstPin = 41, .pinCount = 7 };    
+static const GpioBlock gpio_block_0 = { .baseAddr = 0x38000000, .type = GpioBlock_ADC, .firstPin = 41, .pinCount = 8 };    
 static const GpioBlock gpio_block_1 = { .baseAddr = 0x38010000, .type = GpioBlock_PWM, .firstPin =  0, .pinCount = 4 };
 static const GpioBlock gpio_block_2 = { .baseAddr = 0x38020000, .type = GpioBlock_PWM, .firstPin =  4, .pinCount = 4 };
 */
