@@ -20,12 +20,12 @@
     
 static const GpioBlock gpio_block_0 = { .baseAddr = 0x38000000, .type = GpioBlock_ADC, .firstPin = 41, .pinCount = 7 };    
 static const GpioBlock gpio_block_1 = { .baseAddr = 0x38010000, .type = GpioBlock_PWM, .firstPin =  0, .pinCount = 4 };
-static const GpioBlock gpio_block_2 = { .baseAddr = 0x38020000, .type = GpioBlock_PWM, .firstPin =  4, .pinCount = 3 };
+static const GpioBlock gpio_block_2 = { .baseAddr = 0x38020000, .type = GpioBlock_PWM, .firstPin =  4, .pinCount = 4 };
 */
 static const GpioBlock pwm2         = { .baseAddr = 0x38030000, .type = GpioBlock_PWM, .firstPin =  8, .pinCount = 4 };
 static const GpioBlock grp3         = { .baseAddr = 0x38040000, .type = GpioBlock_GRP, .firstPin = 12, .pinCount = 4 };
 /*
-static const GpioBlock gpio_block_5 = { .baseAddr = 0x38050000, .type = GpioBlock_GRP, .firstPin = 16, .pinCount = 3 };
+static const GpioBlock gpio_block_5 = { .baseAddr = 0x38050000, .type = GpioBlock_GRP, .firstPin = 16, .pinCount = 4 };
 static const GpioBlock gpio_block_6 = { .baseAddr = 0x38060000, .type = GpioBlock_GRP, .firstPin = 20, .pinCount = 4 };
 static const GpioBlock gpio_block_7 = { .baseAddr = 0x38070000, .type = GpioBlock_ISU, .firstPin = 26, .pinCount = 4 };
 static const GpioBlock gpio_block_8 = { .baseAddr = 0x38080000, .type = GpioBlock_ISU, .firstPin = 31, .pinCount = 4 };
