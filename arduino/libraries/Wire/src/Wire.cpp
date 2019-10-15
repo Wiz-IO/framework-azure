@@ -26,10 +26,6 @@ extern "C"
 #include <inttypes.h>
 }
 
-#ifndef SYSROOT_2_BETA1905
-#error Only Sysroot 2+Beta1905 or up !!! Project ini - Add line: board_build.sysroot = 2+Beta1905
-#endif
-
 #include "Arduino.h"
 #include "Wire.h"
 #include <applibs/i2c.h>
