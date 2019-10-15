@@ -163,7 +163,6 @@ public:
     return rc;
   }
 
-#ifdef SYSROOT_2_BETA1905
   void storage(const char *path)
   {
     certificatePath = Storage_GetAbsolutePathInImagePackage(path); // 2+Beta1905 "certs/DigiCertGlobalRootCA.pem"
@@ -176,7 +175,7 @@ public:
       CURL_SETOPT(CURLOPT_CAINFO, path);
     }
   }
-#endif
+
 };
 
 #endif /* curlClient_H_ */
