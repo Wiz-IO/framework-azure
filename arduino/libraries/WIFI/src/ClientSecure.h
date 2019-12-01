@@ -139,7 +139,7 @@ private:
 };
 
 #else
-    #error "Experimental Mode is not enabled, Open: platformio.ini, Add: board_build.ex_mode = enabled"
+    #error " Experimental Mode is not enabled, Open: platformio.ini, Add: board_build.ex_mode = enable "
 #endif
 
 #endif /* _WIFICLIENT_H_ */
