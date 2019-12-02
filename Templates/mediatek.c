@@ -17,7 +17,7 @@
 _Noreturn void RTCoreMain(void)
 {
     NVIC_SetupVectorTable();
-    STD_Init();
+    STD_Init(); // need to reload our syscalls as _sbrk() etc
 
     // SETUP
 
