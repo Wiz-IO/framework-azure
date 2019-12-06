@@ -271,7 +271,7 @@
  *		       ctrl_rtos->ctlr->chn_type =
  *			       _mtk_os_hal_dma_get_chn_type(chn);
  *		       if (ctrl_rtos->ctlr->chn_type == -1) {
- *			       printf("invalid dma channel number: %d\n", chn);
+ *			       OS_DEBUG("invalid dma channel number: %d\n", chn);
  *			       return -EPARAM;
  *		       }
  *
@@ -282,9 +282,9 @@
  *
  *		       ctrl_rtos->status = RUNNING;
  *	       } else {
- *		       printf("chn %d is being used\n", chn);
+ *		       OS_DEBUG("chn %d is being used\n", chn);
  *		       if (ctrl_rtos->ctlr != NULL) {
- *			       printf("chn(%d) status(%d)\n",
+ *			       OS_DEBUG("chn(%d) status(%d)\n",
  *			       ctrl_rtos->ctlr->chn, ctrl_rtos->status);
  *		       }
  *		       ret = -EBUSY;
@@ -319,7 +319,7 @@
  *
  *	       ctrl = ctrl_rtos->ctlr;
  *	       if (ctrl == NULL) {
- *		       printf("dma channel has not been allocated!\n");
+ *		       OS_DEBUG("dma channel has not been allocated!\n");
  *		       return -EPTR;
  *	       }
  *
@@ -464,7 +464,7 @@
  *		       ctrl_rtos->interrupt_2.cb_data = cb_data;
  *		       break;
  *	       default:
- *		       printf("unknown dma isr_type %d\n", isr_type);
+ *		       OS_DEBUG("unknown dma isr_type %d\n", isr_type);
  *		       return -EPARAM;
  *	       }
  *
@@ -541,7 +541,7 @@
  *
  *	       ret = mtk_mhal_dma_stop(ctrl_rtos->ctlr);
  *	       if (ret) {
- *		       printf("stop dma fail!\n");
+ *		       OS_DEBUG("stop dma fail!\n");
  *		       return ret;
  *	       }
  *
@@ -615,7 +615,7 @@
  *	   follows:
  *	     while (!done_flag) {
  *	        int status = mtk_os_hal_dma_get_status(DMA_M2M_CH12);
- *	        printf("mtk_os_hal_dma_get_status %d\n", status);
+ *	        OS_DEBUG("mtk_os_hal_dma_get_status %d\n", status);
  *	     }
  *	- Stop DMA channel and release DMA channel resource.
  *	  -Call mtk_os_hal_dma_stop(DMA_M2M_CH12) to stop dma channel after

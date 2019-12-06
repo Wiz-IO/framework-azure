@@ -36,56 +36,74 @@
 #include "mhal_osai.h"
 #include "os_hal_dma.h"
 
+#ifdef FREERTOS
+#include <FreeRTOS.h>
+#include <task.h>
+#endif
+
+
 #ifdef OSAI_BARE_METAL
+
 void osai_delay_us(u32 us)
 {
 }
 
 void osai_delay_ms(u32 ms)
 {
-}
-
-u32 osai_readl(void __iomem* addr)
-{
-	return *(volatile uint32_t*)(addr);;
-}
-
-void osai_writel(u32 data, void __iomem* addr)
-{
-	*(volatile uint32_t*)(addr) = data;
-}
-
-unsigned long osai_get_phyaddr(void* vir_addr)
-{
-	return 0;
-
-}
-#else
-void osai_delay_us(u32 us)
-{
-	 delay_us(us);
-}
-
-void osai_delay_ms(u32 ms)
-{
-	 delay_ms(ms);
 }
 
 u32 osai_readl(void __iomem *addr)
 {
-	return readl(addr);
+	return *(volatile uint32_t *)(addr);
 }
 
 void osai_writel(u32 data, void __iomem *addr)
 {
-	writel(data, addr);
+	*(volatile uint32_t *)(addr) = data;
 }
 
 unsigned long osai_get_phyaddr(void *vir_addr)
 {
-	return (unsigned long) vir_addr;
-
+	return 0;
 }
+
+#else
+
+void osai_delay_us(u32 us)
+{
+#ifdef FREERTOS
+
+#else
+	delay_us(us);
+#endif
+}
+
+void osai_delay_ms(u32 ms)
+{
+#ifdef FREERTOS
+	vTaskDelay(ms);
+#else
+	delay_ms(ms);
+#endif
+}
+
+u32 osai_readl(void __iomem *addr)
+{
+	return *(volatile uint32_t *)(addr);
+	//return readl(addr);
+}
+
+void osai_writel(u32 data, void __iomem *addr)
+{
+	*(volatile uint32_t *)(addr) = data;
+	//writel(data, addr);
+}
+
+unsigned long osai_get_phyaddr(void *vir_addr)
+{
+	return (unsigned long)vir_addr;
+}
+
 #endif
 
 #ifdef OSAI_ENABLE_DMA

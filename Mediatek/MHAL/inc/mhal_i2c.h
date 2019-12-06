@@ -153,7 +153,7 @@
  *      ret |= mtk_os_hal_gpio_request(pin_sda);
  *
  *      if (ret < 0) {
- *          printf("I2C request gpio pin fail, ret = %d\n", ret);
+ *          OS_DEBUG("I2C request gpio pin fail, ret = %d\n", ret);
  *          return ret;
  *      }
  *
@@ -351,13 +351,13 @@
  *      struct mtk_i2c_controller *i2c;
  *
  *      if (ctrl_rtos == NULL) {
- *          printf("i2c%d ctrl_rtos is NULL point\n", bus_num);
+ *          OS_DEBUG("i2c%d ctrl_rtos is NULL point\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (i2c == NULL) {
- *          printf("i2c%d *i2c is NULL point\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL point\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -365,14 +365,14 @@
  *
  *      ret = mtk_mhal_i2c_trigger_transfer(i2c);
  *      if (ret) {
- *          printf("i2c%d trigger transfer fail\n", bus_num);
+ *          OS_DEBUG("i2c%d trigger transfer fail\n", bus_num);
  *          goto err_exit;
  *      }
  *
  *      ret = _mtk_os_hal_i2c_wait_for_completion_timeout(ctrl_rtos,
  *                            i2c->timeout);
  *      if (ret) {
- *          printf("Take i2c%d Semaphore timeout!\n", bus_num);
+ *          OS_DEBUG("Take i2c%d Semaphore timeout!\n", bus_num);
  *          ret = -I2C_ETIMEDOUT;
  *      } else
  *          ret = mtk_mhal_i2c_result_handle(i2c);
@@ -417,14 +417,14 @@
  *
  *      ret = _mtk_os_hal_i2c_config_pinmux(bus_num);
  *      if (ret < 0) {
- *          printf("I2C%d config i2c pinmux fail, ret = %d\n",
+ *          OS_DEBUG("I2C%d config i2c pinmux fail, ret = %d\n",
  *              bus_num, ret);
  *          return ret;
  *      }
  *
  *      ret = mtk_mhal_i2c_request_dma(i2c);
  *      if (ret < 0) {
- *          printf("I2C%d request dma channel fail, ret = %d\n",
+ *          OS_DEBUG("I2C%d request dma channel fail, ret = %d\n",
  *                  bus_num, ret);
  *          _mtk_os_hal_i2c_free_pinmux(bus_num);
  *          return ret;
@@ -444,7 +444,7 @@
  *      i2c = ctrl_rtos->i2c;
  *
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -468,13 +468,13 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
  *      ret = mtk_mhal_i2c_init_speed(i2c, speed);
  *      if (ret)
- *          printf("i2c%d init speed fail\n", bus_num);
+ *          OS_DEBUG("i2c%d init speed fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -490,7 +490,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -509,7 +509,7 @@
  *
  *      ret = _mtk_os_hal_i2c_transfer(ctrl_rtos, bus_num);
  *      if (ret)
- *          printf("i2c%d read fail\n", bus_num);
+ *          OS_DEBUG("i2c%d read fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -526,7 +526,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -545,7 +545,7 @@
  *
  *      ret = _mtk_os_hal_i2c_transfer(ctrl_rtos, bus_num);
  *      if (ret)
- *          printf("i2c%d write fail\n", bus_num);
+ *          OS_DEBUG("i2c%d write fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -563,7 +563,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -587,7 +587,7 @@
  *
  *      ret = _mtk_os_hal_i2c_transfer(ctrl_rtos, bus_num);
  *      if (ret)
- *          printf("i2c%d write fail\n", bus_num);
+ *          OS_DEBUG("i2c%d write fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -602,7 +602,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -610,7 +610,7 @@
  *
  *      ret = mtk_mhal_i2c_init_slv_addr(i2c, slv_addr);
  *      if (ret)
- *          printf("i2c%d init slv_addr fail\n", bus_num);
+ *          OS_DEBUG("i2c%d init slv_addr fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -627,7 +627,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -645,7 +645,7 @@
  *
  *      ret = _mtk_os_hal_i2c_transfer(ctrl_rtos, bus_num);
  *      if (ret)
- *          printf("i2c%d slave TX fail\n", bus_num);
+ *          OS_DEBUG("i2c%d slave TX fail\n", bus_num);
  *
  *      return ret;
  *  }
@@ -663,7 +663,7 @@
  *
  *      i2c = ctrl_rtos->i2c;
  *      if (!i2c) {
- *          printf("i2c%d *i2c is NULL Pointer\n", bus_num);
+ *          OS_DEBUG("i2c%d *i2c is NULL Pointer\n", bus_num);
  *          return -I2C_EPTR;
  *      }
  *
@@ -682,7 +682,7 @@
  *
  *      ret = _mtk_os_hal_i2c_transfer(ctrl_rtos, bus_num);
  *      if (ret) {
- *          printf("i2c%d slave RX fail\n", bus_num);
+ *          OS_DEBUG("i2c%d slave RX fail\n", bus_num);
  *          return ret;
  *      }
  *
@@ -703,19 +703,19 @@
  *                        I2C_SLV_CMD_LEN, time_out);
  *
  *      if (ret < 0) {
- *          printf("i2c slave receive command fail\n");
+ *          OS_DEBUG("i2c slave receive command fail\n");
  *          return ret;
  *      }
  *
  *      switch (cmd_buf[0]) {
  *      case I2C_SLAVE_TX:
  *          if (!wr_buf) {
- *              printf("I2C slave TX buffer NULL!\n");
+ *              OS_DEBUG("I2C slave TX buffer NULL!\n");
  *              return -I2C_EPTR;
  *          }
  *
  *          if (wr_buf_size < cmd_buf[1]) {
- *              printf("i2c slave buffer length(%d) less than
+ *              OS_DEBUG("i2c slave buffer length(%d) less than
  *              master will Read length(%d)!\n",
  *                  wr_buf_size, cmd_buf[1]);
  *              return -I2C_EINVAL;
@@ -724,7 +724,7 @@
  *          ret = mtk_os_hal_i2c_slave_tx(bus_num, wr_buf,
  *                            cmd_buf[1], time_out);
  *          if (ret < 0)
- *              printf("i2c slave Tx data to master fail!\n");
+ *              OS_DEBUG("i2c slave Tx data to master fail!\n");
  *
  *          break;
  *
@@ -739,12 +739,12 @@
  *          ret = mtk_os_hal_i2c_slave_rx(bus_num, rd_buf,
  *                            cmd_buf[1], time_out);
  *          if (ret < 0)
- *              printf("i2c slave receive data fail!\n");
+ *              OS_DEBUG("i2c slave receive data fail!\n");
  *
  *          break;
  *
  *      default:
- *          printf("i2c slave receive command not support!\n");
+ *          OS_DEBUG("i2c slave receive command not support!\n");
  *      }
  *
  *      return ret;

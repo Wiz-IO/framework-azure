@@ -162,7 +162,7 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_0);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_0);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_0,
@@ -174,7 +174,7 @@
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_1);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_1);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_1,
@@ -186,7 +186,7 @@
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_2);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_2);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_2,
@@ -198,7 +198,7 @@
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_3);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_3);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_3,
@@ -212,7 +212,7 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_4);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_4);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_4,
@@ -224,7 +224,7 @@
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_5);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_5);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_5,
@@ -236,7 +236,7 @@
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_6);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_6);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_6,
@@ -248,7 +248,7 @@
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_7);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_7);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_7,
@@ -262,7 +262,7 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_8);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_8);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_8,
@@ -274,7 +274,7 @@
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_9);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_9);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_9,
@@ -286,7 +286,7 @@
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_10);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_10);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_10,
@@ -298,7 +298,7 @@
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_request(OS_HAL_GPIO_11);
  *				if (ret != 0)
- *					printf("request gpio[%d] fail\n",
+ *					OS_DEBUG("request gpio[%d] fail\n",
  *						OS_HAL_GPIO_11);
  *				ret |= mtk_os_hal_gpio_pmx_set_mode(
  *							OS_HAL_GPIO_11,
@@ -323,25 +323,25 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_0);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_0);
  *			}
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_1);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_1);
  *			}
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_2);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_2);
  *			}
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_3);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_3);
  *		 *		}
  *			break;
@@ -349,25 +349,25 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_4);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_4);
  *			}
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_5);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_5);
  *			}
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_6);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_6);
  *			}
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_7);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_7);
  *			}
  *			break;
@@ -375,25 +375,25 @@
  *			if (channel_bit_map & 0x1) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_8);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_8);
  *			}
  *			if (channel_bit_map & 0x2) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_9);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_9);
  *			}
  *			if (channel_bit_map & 0x4) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_10);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_10);
  *			}
  *			if (channel_bit_map & 0x8) {
  *				ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_11);
  *				if (ret != 0)
- *					printf("release gpio[%d] fail\n",
+ *					OS_DEBUG("release gpio[%d] fail\n",
  *						OS_HAL_GPIO_11);
  *			}
  *			break;
@@ -416,7 +416,7 @@
  *
  *		if (!ctlr_rtos->ctlr)
  *			return -EPTR;
- *		printf("mtk_os_hal_pwm_ctlr_init\n");
+ *		OS_DEBUG("mtk_os_hal_pwm_ctlr_init\n");
  *		ctlr = ctlr_rtos->ctlr;
  *
  *		ctlr->base = (void __iomem *)pwm_base_addr[group_num];
@@ -478,16 +478,16 @@
  *
  *		ctlr->data->frequency = frequency;
  *		ctlr->data->duty_cycle = duty_cycle;
- *		printf("set frequency == %d, duty_cycle== %d\n",
+ *		OS_DEBUG("set frequency == %d, duty_cycle== %d\n",
  *			ctlr->data->frequency, ctlr->data->duty_cycle);
  *		ret = mtk_mhal_pwm_set_frequency(ctlr_rtos->ctlr, channel_num);
  *		if (ret)
  *			return ret;
- *		printf("set frequency end\n");
+ *		OS_DEBUG("set frequency end\n");
  *		ret = mtk_mhal_pwm_set_duty_cycle(ctlr_rtos->ctlr, channel_num);
  *		if (ret)
  *			return ret;
- *		printf("set duty end\n");
+ *		OS_DEBUG("set duty end\n");
  *
  *		return 0;
  *	}
@@ -532,10 +532,10 @@
  *			return -EPTR;
  *
  *		ctlr = ctlr_rtos->ctlr;
- *		printf("state_config->frequency %d\n", state_config.frequency);
- *		printf("state_config->duty_cycle %d\n",
+ *		OS_DEBUG("state_config->frequency %d\n", state_config.frequency);
+ *		OS_DEBUG("state_config->duty_cycle %d\n",
  *				state_config.duty_cycle);
- *		printf("state_config->stage %d\n", state_config.stage);
+ *		OS_DEBUG("state_config->stage %d\n", state_config.stage);
  *		ctlr->data->frequency = state_config.frequency;
  *		ctlr->data->duty_cycle = state_config.duty_cycle;
  *		ctlr->data->stage = state_config.stage;

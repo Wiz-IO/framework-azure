@@ -446,11 +446,11 @@
 *	mtk_mhal_uart_start_dma_tx(ctlr);
 *
 *	cnt = len / (ctlr->baudrate / 10) + 1000;
-*	printf("UART TX DMA Len:%d, timeout:%dms\n", len, cnt);
+*	OS_DEBUG("UART TX DMA Len:%d, timeout:%dms\n", len, cnt);
 *
 *	ret = _mtk_os_hal_uart_wait_for_tx_done(ctlr_rtos, cnt);
 *	if (ret) {
-*		printf("Take UART TX Semaphore timeout!\n");
+*		OS_DEBUG("Take UART TX Semaphore timeout!\n");
 *		mtk_mhal_uart_stop_dma_tx(ctlr);
 *	}
 *
@@ -459,7 +459,7 @@
 *
 *	mtk_mhal_uart_set_dma(ctlr, false);
 *
-*	printf("tx_size: %d\n", ctlr->mdata->tx_size);
+*	OS_DEBUG("tx_size: %d\n", ctlr->mdata->tx_size);
 *
 *	return ctlr->mdata->tx_size;
 *}
@@ -478,7 +478,7 @@
 *		return -UART_EPTR;
 *
 *	if (len >= 0x4000) {
-*		printf("DMA max transfter size is 0x4000\n");
+*		OS_DEBUG("DMA max transfter size is 0x4000\n");
 *		return -UART_EINVAL;
 *	}
 *
@@ -510,7 +510,7 @@
 *
 *	ret = _mtk_os_hal_uart_wait_for_rx_done(ctlr_rtos, cnt);
 *	if (ret) {
-*		printf("Take UART RX Semaphore timeout!\n");
+*		OS_DEBUG("Take UART RX Semaphore timeout!\n");
 *		mtk_mhal_uart_stop_dma_rx(ctlr);
 *	}
 *
@@ -519,7 +519,7 @@
 *
 *	mtk_mhal_uart_set_dma(ctlr, false);
 *
-*	printf("rx_size: %d!\n", ctlr->mdata->rx_size);
+*	OS_DEBUG("rx_size: %d!\n", ctlr->mdata->rx_size);
 *
 *	return ctlr->mdata->rx_size;
 *}

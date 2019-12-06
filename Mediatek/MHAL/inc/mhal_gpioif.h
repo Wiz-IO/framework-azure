@@ -159,7 +159,7 @@
  *	 u8 group)
  *{
  *	 if (group >= MTK_GPIOIF_MAX_GRP_NUM) {
- *		 printf("gpioif get group[%d] fail\n", group);
+ *		 OS_DEBUG("gpioif get group[%d] fail\n", group);
  *		 return NULL;
  *	 }
  *
@@ -179,7 +179,7 @@
  *		 for (pin = 0; pin <= 3; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -187,7 +187,7 @@
  *		 for (pin = 4; pin <= 7; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -195,7 +195,7 @@
  *		 for (pin = 8; pin <= 11; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -203,7 +203,7 @@
  *		 for (pin = 12; pin <= 15; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -211,7 +211,7 @@
  *		 for (pin = 16; pin <= 19; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -219,7 +219,7 @@
  *		 for (pin = 20; pin <= 23; pin++) {
  *			 ret = mtk_os_hal_gpio_request(pin);
  *			 if (ret != 0)
- *				 printf("request gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("request gpio[%d] fail\n", pin);
  *			 mtk_os_hal_gpio_pmx_set_mode(pin, 0);
  *		 }
  *		 break;
@@ -241,42 +241,42 @@
  *		 for (pin = 0; pin <= 3; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 case 1:
  *		 for (pin = 4; pin <= 7; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 case 2:
  *		 for (pin = 8; pin <= 11; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 case 3:
  *		 for (pin = 12; pin <= 15; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 case 4:
  *		 for (pin = 16; pin <= 19; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 case 5:
  *		 for (pin = 20; pin <= 23; pin++) {
  *			 ret = mtk_os_hal_gpio_free(pin);
  *			 if (ret != 0)
- *				 printf("free gpio[%d] fail\n", pin);
+ *				 OS_DEBUG("free gpio[%d] fail\n", pin);
  *		 }
  *		 break;
  *	 }
@@ -309,7 +309,7 @@
  *		 return -EINVAL;
  *	 ctlr = ctlr_rtos->ctlr;
  *
- *	 printf("now in gpioif%d_irq_handler\n", group);
+ *	 OS_DEBUG("now in gpioif%d_irq_handler\n", group);
  *	 ctlr->mconfig->group = (mhal_gpioif_group)group;
  *	 mtk_mhal_gpioif_isr_handle(ctlr);
  *	 ctlr_rtos->int_callback(ctlr_rtos->user_data);
@@ -817,21 +817,21 @@
  *	 if (mode == MHAL_GPIOIF_EVENT_COUNTER_MODE) {
  *		 mtk_mhal_gpioif_read_gpio_event_count(ctlr,
  *		 &value);
- *		 printf("event counter value 0x%x\n", value);
+ *		 OS_DEBUG("event counter value 0x%x\n", value);
  *	 } else if (mode == MHAL_GPIOIF_CAP_COUNTER_MODE) {
  *		 mtk_mhal_gpioif_read_gpio_cap_fifo0_value(ctlr,
  *		 &value);
- *		 printf("capture counter value 0x%x\n", value);
+ *		 OS_DEBUG("capture counter value 0x%x\n", value);
  *	 } else if (mode == MHAL_GPIOIF_EVENT_CAP_COUNTER_MODE) {
  *		 mtk_mhal_gpioif_read_gpio_event_count(ctlr,
  *		 &value);
- *		 printf("event counter value 0x%x\n", value);
+ *		 OS_DEBUG("event counter value 0x%x\n", value);
  *		 mtk_mhal_gpioif_read_gpio_cap_fifo0_value(ctlr,
  *		 &value);
- *		 printf("capture counter fifo0 value 0x%x\n", value);
+ *		 OS_DEBUG("capture counter fifo0 value 0x%x\n", value);
  *		 mtk_mhal_gpioif_read_gpio_cap_fifo1_value(ctlr,
  *		 &value);
- *		 printf("capture counter fifo1 value 0x%x\n", value);
+ *		 OS_DEBUG("capture counter fifo1 value 0x%x\n", value);
  *	 }
  *
  *	 return 0;
@@ -985,32 +985,32 @@
  *		 return -EINVAL;
  *	 ctlr = ctlr_rtos->ctlr;
  *
- *	 printf("int_cnt=0x%x\n", ctlr->int_cnt->int_bit);
- *	 printf("int_event_low_count=%d\n",
+ *	 OS_DEBUG("int_cnt=0x%x\n", ctlr->int_cnt->int_bit);
+ *	 OS_DEBUG("int_event_low_count=%d\n",
  *		 ctlr->int_cnt->int_event_low_count);
- *	 printf("int_event_high_count=%d\n",
+ *	 OS_DEBUG("int_event_high_count=%d\n",
  *		 ctlr->int_cnt->int_event_high_count);
- *	 printf("int_gpio2_rst_done_count=%d\n",
+ *	 OS_DEBUG("int_gpio2_rst_done_count=%d\n",
  *		 ctlr->int_cnt->int_gpio2_rst_done_count);
- *	 printf("int_event_over_count=%d\n",
+ *	 OS_DEBUG("int_event_over_count=%d\n",
  *		 ctlr->int_cnt->int_event_over_count);
- *	 printf("int_event_uf_count=%d\n",
+ *	 OS_DEBUG("int_event_uf_count=%d\n",
  *		 ctlr->int_cnt->int_event_uf_count);
- *	 printf("int_cap_f0_full_count=%d\n",
+ *	 OS_DEBUG("int_cap_f0_full_count=%d\n",
  *		 ctlr->int_cnt->int_cap_f0_full_count);
- *	 printf("int_cap_f1_full_count=%d\n",
+ *	 OS_DEBUG("int_cap_f1_full_count=%d\n",
  *		 ctlr->int_cnt->int_cap_f1_full_count);
- *	 printf("int_reset_cap_f0_full_count=%d\n",
+ *	 OS_DEBUG("int_reset_cap_f0_full_count=%d\n",
  *		 ctlr->int_cnt->int_reset_cap_f0_full_count);
- *	 printf("int_reset_cap_f1_full_count=%d\n",
+ *	 OS_DEBUG("int_reset_cap_f1_full_count=%d\n",
  *		 ctlr->int_cnt->int_reset_cap_f1_full_count);
- *	 printf("int_cap_f0_np_count=%d\n",
+ *	 OS_DEBUG("int_cap_f0_np_count=%d\n",
  *		 ctlr->int_cnt->int_cap_f0_np_count);
- *	 printf("int_cap_f1_np_count=%d\n",
+ *	 OS_DEBUG("int_cap_f1_np_count=%d\n",
  *		 ctlr->int_cnt->int_cap_f1_np_count);
- *	 printf("int_cap_f0_p_count=%d\n",
+ *	 OS_DEBUG("int_cap_f0_p_count=%d\n",
  *		 ctlr->int_cnt->int_cap_f0_p_count);
- *	 printf("int_cap_f1_p_count =%d\n",
+ *	 OS_DEBUG("int_cap_f1_p_count =%d\n",
  *		 ctlr->int_cnt->int_cap_f1_p_count);
  *
  *	 return 0;

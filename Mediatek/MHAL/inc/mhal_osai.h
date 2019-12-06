@@ -55,14 +55,18 @@
  */
 #define __iomem
 
+
 /**
  * It's the wrapper of print log function between different OS.
+ * edit: WizIO https://github.com/MediaTek-Labs/mt3620_m4_software/issues/3
  */
-#define osai_print printf
-
 #ifdef OSAI_BARE_METAL
-#define printf(...)
+#	define OS_DEBUG(FORMAT, ...) do { /* printf(FORMAT, ##__VA_ARGS__); */ } while(0)
+#else
+#	define OS_DEBUG(FORMAT, ...) do { /* printf(FORMAT, ##__VA_ARGS__); */ } while(0)
 #endif
+
+#define osai_print OS_DEBUG
 
 /**
   * This section introduces the typedef to mapping

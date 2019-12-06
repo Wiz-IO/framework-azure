@@ -203,7 +203,7 @@
  *		*_mtk_os_hal_spim_get_ctlr(spim_num bus_num)
  *	{
  *		if (bus_num > OS_HAL_SPIM_ISU_MAX - 1) {
- *			printf("invalid, bus_num should be 0~%d\n",
+ *			OS_DEBUG("invalid, bus_num should be 0~%d\n",
  *				OS_HAL_SPIM_ISU_MAX - 1);
  *			return NULL;
  *		}
@@ -349,7 +349,7 @@
  *		struct mtk_spi_transfer *curr_xfer = ctlr->current_xfer;
  *		BaseType_t x_higher_priority_task_woken = pdFALSE;
  *
- *		printf("now in spim%d_irq_handler\n", bus_num);
+ *		OS_DEBUG("now in spim%d_irq_handler\n", bus_num);
  *
  *		mtk_mhal_spim_clear_irq_status(ctlr);
  *
@@ -542,14 +542,14 @@
  *			ret = mtk_mhal_spim_fifo_transfer_one(ctlr, xfer);
  *
  *		if (ret) {
- *			printf("spi master transfer one fail.\n");
+ *			OS_DEBUG("spi master transfer one fail.\n");
  *			goto err_xfer_fail;
  *		}
  *
  *		ret = _mtk_os_hal_spim_wait_for_completion_timeout(ctlr_rtos,
  *								   1000);
  *		if (ret)
- *			printf("Take spi master Semaphore timeout!\n");
+ *			OS_DEBUG("Take spi master Semaphore timeout!\n");
  *
  *	err_xfer_fail:
  *		mtk_mhal_spim_disable_clk(ctlr);

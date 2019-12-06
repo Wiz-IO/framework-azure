@@ -156,7 +156,7 @@
  *				return 0;
  *			}
  *		}
- *		printf("mtk_eint_convert_gpio_irq fail.\n");
+ *		OS_DEBUG("mtk_eint_convert_gpio_irq fail.\n");
  *		return -EINT_EINVAL;
  *	}
  *
@@ -174,7 +174,7 @@
  *			return -EINT_EINVAL;
  *
  *		if (trigger_mode > HAL_EINT_EDGE_FALLING_AND_RISING) {
- *			printf("Trigger_mode value is invalid.\n");
+ *			OS_DEBUG("Trigger_mode value is invalid.\n");
  *			return -EINT_EINVAL;
  *		}
  *
@@ -276,7 +276,7 @@
  *			return -EINT_EINVAL;
  *
  *		if (trigger_mode > HAL_EINT_EDGE_FALLING_AND_RISING) {
- *			printf("Trigger_mode value is invalid.\n");
+ *			OS_DEBUG("Trigger_mode value is invalid.\n");
  *			return -EINT_EINVAL;
  *		}
  *
@@ -382,7 +382,7 @@
  *
  *		trigger++;
  *		delay_ms(200);
- *		printf("irq %d tirigger, tirgger times: %d\n", vector, trigger);
+ *		OS_DEBUG("irq %d tirigger, tirgger times: %d\n", vector, trigger);
  *		NVIC_ClearPendingIRQ(vector);
  *		mSetHWEntry(CM4_WIC_SW_CLR, 1);
  *		mSetHWEntry(CM4_WIC_SW_CLR, 0);
@@ -413,7 +413,7 @@
  *					debounce[deb_time]);
  *				delay_ms(200);
  *				trigger = 0;
- *				printf("Will trigger EINT %d,type is %d!\n",
+ *				OS_DEBUG("Will trigger EINT %d,type is %d!\n",
  *					eint_num, type);
  *				tick[0] = get_current_system_us();
  *				mtk_os_hal_gpio_set_output(
@@ -421,13 +421,13 @@
  *				while (*(volatile int *)(loop) == 0)
  *					;
  *				tick[2] = tick[1] - tick[0];
- *				printf("EINT debounce time is %d(ms) ,
+ *				OS_DEBUG("EINT debounce time is %d(ms) ,
  *					test result is %d(us).\n",
  *					debounce[deb_time], (int)(tick[2]));
  *			}
  *			mtk_os_hal_eint_unregister(eint_num);
  *		}
- *		printf("EINT debounce test pass!\n");
+ *		OS_DEBUG("EINT debounce test pass!\n");
  *		return 0;
  *	}
  *    @endcode

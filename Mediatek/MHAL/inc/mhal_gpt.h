@@ -129,7 +129,7 @@
  *
  *	#define OS_GPT_AVAILABLE_MASK		(0x0000001f)
  *
- *	#define OS_GPT_LOG(string, args...)	printf("[os_gpt]"string, ##args)
+ *	#define OS_GPT_LOG(string, args...)	OS_DEBUG("[os_gpt]"string, ##args)
  *
  *	struct os_gpt_dev {
  *		struct hal_gpt_dev	hal_dev;

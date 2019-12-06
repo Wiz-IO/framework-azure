@@ -101,7 +101,7 @@
  *	#include <nvic.h>
  *	#include <irq.h>
  *
- *	#define OS_WDT_LOG(string, args...)	printf("[os_wdt]"string, ##args)
+ *	#define OS_WDT_LOG(string, args...)	OS_DEBUG("[os_wdt]"string, ##args)
  *
  *	// defined in os_hal_wdt.h
  *	struct os_wdt_int {
