@@ -164,6 +164,6 @@ int mtk_os_hal_gpio_ctlr_init(void)
 
 int mtk_os_hal_gpio_ctlr_deinit(void)
 {
-	printf("%s release done\n", __func__);
+	OS_DEBUG("%s release done\n", __func__);
 	return 0;
 }

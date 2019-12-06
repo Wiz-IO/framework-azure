@@ -63,91 +63,91 @@ static int _mtk_os_hal_adc_config_gpio(void)
 
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_41);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_41);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_41,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_41,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_41);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_42);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_42);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_42,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_42,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_42);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_43);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_43);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_43,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_43,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_43);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_44);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_44);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_44,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_44,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_44);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_45);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_45);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_45,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_45,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_45);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_46);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_46);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_46,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_46,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_46);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_47);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_47);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_47,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_47,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_47);
 	ret |= mtk_os_hal_gpio_request(OS_HAL_GPIO_48);
 	if (ret != 0)
-		printf("request gpio[%d] fail\n",
+		OS_DEBUG("request gpio[%d] fail\n",
 			OS_HAL_GPIO_48);
 	ret |= mtk_os_hal_gpio_pmx_set_mode(OS_HAL_GPIO_48,
 				OS_HAL_MODE_0);
 	ret |= mtk_os_hal_gpio_set_direction(OS_HAL_GPIO_48,
 				OS_HAL_GPIO_DIR_INPUT);
 	if (ret != 0)
-		printf("config gpio[%d] fail\n",
+		OS_DEBUG("config gpio[%d] fail\n",
 			OS_HAL_GPIO_48);
 
 	return ret;
@@ -159,35 +159,35 @@ static int _mtk_os_hal_adc_release_gpio(void)
 
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_41);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_41);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_42);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_42);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_43);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_43);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_44);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_44);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_45);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_45);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_46);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_46);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_47);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_47);
 	ret = mtk_os_hal_gpio_free(OS_HAL_GPIO_48);
 	if (ret != 0)
-		printf("release gpio[%d] fail\n",
+		OS_DEBUG("release gpio[%d] fail\n",
 			OS_HAL_GPIO_48);
 
 	return ret;
@@ -295,12 +295,12 @@ int mtk_os_hal_adc_ctlr_init(adc_pmode pmode, adc_fifo_mode fifo_mode,
 
 		ctlr->dma_channel = VDMA_ADC_RX_CH29;
 		ctlr->use_dma = 1;
-		printf("mtk os_hal_adc_ctlr_init dma_vfifo_len == %d\n",
+		OS_DEBUG("mtk os_hal_adc_ctlr_init dma_vfifo_len == %d\n",
 			ctlr->adc_fsm_parameter->dma_vfifo_len);
-		printf("mtk os_hal_adc_ctlr_init dma_vfifo_addr == %p\n",
+		OS_DEBUG("mtk os_hal_adc_ctlr_init dma_vfifo_addr == %p\n",
 			ctlr->adc_fsm_parameter->dma_vfifo_addr);
 	}
-	printf("mtk os_hal_adc_ctlr_init ctlr->rx_buf == %p\n",
+	OS_DEBUG("mtk os_hal_adc_ctlr_init ctlr->rx_buf == %p\n",
 		ctlr->rx_buf);
 
 	for (channel_index = 0; channel_index < ADC_CHANNEL_MAX;
@@ -339,7 +339,7 @@ int mtk_os_hal_adc_ctlr_init(adc_pmode pmode, adc_fifo_mode fifo_mode,
 		if (ret)
 			return ret;
 	}
-	printf("mtk os_hal_adc_ctlr_init success\n");
+	OS_DEBUG("mtk os_hal_adc_ctlr_init success\n");
 
 	return ret;
 }
@@ -423,9 +423,9 @@ int mtk_os_hal_adc_fsm_param_set(struct adc_fsm_param *adc_fsm_parameter)
 
 	if (ctlr->adc_fsm_parameter->fifo_mode == ADC_FIFO_DMA) {
 		ctlr->adc_fsm_parameter->dma_vfifo_len = ADC_DMA_BUF_WORD_SIZE;
-		printf("mtk os_hal_adc_ctlr_init dma_vfifo_len == %d\n",
+		OS_DEBUG("mtk os_hal_adc_ctlr_init dma_vfifo_len == %d\n",
 			ctlr->adc_fsm_parameter->dma_vfifo_len);
-		printf("mtk os_hal_adc_ctlr_init dma_vfifo_addr == %p\n",
+		OS_DEBUG("mtk os_hal_adc_ctlr_init dma_vfifo_addr == %p\n",
 			ctlr->adc_fsm_parameter->dma_vfifo_addr);
 	}
 
@@ -464,14 +464,14 @@ int mtk_os_hal_adc_one_shot_get_data(adc_channel sample_channel, u32 *data)
 		(ctlr->adc_fsm_parameter->fifo_mode != ADC_FIFO_DIRECT))
 		return -EPARAMETER;
 
-	printf("sample_channel->%d data point:%p\n", sample_channel, data);
+	OS_DEBUG("sample_channel->%d data point:%p\n", sample_channel, data);
 
 	ret = mtk_mhal_adc_one_shot_get_data(ctlr_rtos->ctlr,
 		sample_channel, data);
 	if (ret)
 		return ret;
 
-	printf("one_shot_get_data sample_channel:->%d, data:%d\n",
+	OS_DEBUG("one_shot_get_data sample_channel:->%d, data:%d\n",
 		sample_channel, *data);
 
 	return 0;
@@ -498,16 +498,16 @@ int mtk_os_hal_adc_period_get_data(adc_channel sample_channel)
 
 	ret = _mtk_os_hal_adc_wait_for_completion_timeout(ctlr_rtos, 1000);
 	if (ret)
-		printf("Take adc master Semaphore timeout!\n");
+		OS_DEBUG("Take adc master Semaphore timeout!\n");
 
 	ret = mtk_mhal_adc_period_get_data(ctlr, sample_channel);
 	if (ret)
 		return ret;
 
-	printf("channel->%d,size:%d\n", sample_channel,
+	OS_DEBUG("channel->%d,size:%d\n", sample_channel,
 	ctlr->rx_size);
 	for (count = 0; count < ctlr->rx_size; count++) {
-		printf("data%d:%d\n",
+		OS_DEBUG("data%d:%d\n",
 		count,
 		ctlr->rx_buf[count]);
 	}

@@ -87,7 +87,7 @@ static int _mtk_os_hal_eint_convert_gpio_irq(eint_number eint_num,
 			return 0;
 		}
 	}
-	printf("mtk_eint_convert_gpio_irq fail.\n");
+	OS_DEBUG("mtk_eint_convert_gpio_irq fail.\n");
 	return -EINT_EINVAL;
 }
 
@@ -103,7 +103,7 @@ int mtk_os_hal_eint_set_type(eint_number eint_num,
 		return -EINT_EINVAL;
 
 	if (trigger_mode > HAL_EINT_EDGE_FALLING_AND_RISING) {
-		printf("Trigger_mode value is invalid.\n");
+		OS_DEBUG("Trigger_mode value is invalid.\n");
 		return -EINT_EINVAL;
 	}
 
@@ -197,7 +197,7 @@ int mtk_os_hal_eint_register(eint_number eint_num,
 		return -EINT_EINVAL;
 
 	if (trigger_mode > HAL_EINT_EDGE_FALLING_AND_RISING) {
-		printf("Trigger_mode value is invalid.\n");
+		OS_DEBUG("Trigger_mode value is invalid.\n");
 		return -EINT_EINVAL;
 	}
 

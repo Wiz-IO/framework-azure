@@ -35,16 +35,18 @@
  * SOFTWARE AT ISSUE.
  */
 
+#include <stdio.h>
 #include <stdint.h>
 #include "vector_table.h"
 
 extern uint32_t StackTop;
 
+void __attribute__((weak)) LogToUart(const char *format, ...); // if need debug
+
 static _Noreturn void DefaultExceptionHandler(void)
 {
-	for (;;) {
-		// empty.
-	}
+    //LogToUart("\n[EXCEPTION]\n");
+    while(1);
 }
 
 void __attribute__((weak, alias("DefaultExceptionHandler"))) NMI_Handler(void);
@@ -65,16 +67,16 @@ void __attribute__((weak, alias("DefaultExceptionHandler"))) Sys_Tick_Handler(vo
 // The exception vector table contains a stack pointer, 15 exception handlers, and an entry for
 // each interrupt.
 uintptr_t __isr_vector[] __attribute__((section(".vector_table"))) __attribute__((used)) = {
-	[0] = (uintptr_t)&StackTop,				/* Top of Stack */
-	[1] = (uintptr_t)RTCoreMain,			/* Reset Handler */
-	[2] = (uintptr_t)NMI_Handler,			/* NMI Handler */
-	[3] = (uintptr_t)Hard_Fault_Handler,	/* Hard Fault Handler */
-	[4] = (uintptr_t)MPU_Fault_Handler,		/* MPU Fault Handler */
-	[5] = (uintptr_t)Bus_Fault_Handler,		/* Bus Fault Handler */
-	[6] = (uintptr_t)Usage_Fault_Handler,	/* Usage Fault Handler */
-	[11] = (uintptr_t)SVCall__Handler,		/* SVCall Handler */
-	[12] = (uintptr_t)Debug_Monitor_Handler,/* Debug Monitor Handler */
-	[14] = (uintptr_t)Pend_SV__Handler,		/* PendSV Handler */
-	[15] = (uintptr_t)Sys_Tick_Handler,		/* SysTick Handler */
+    [ 0] = (uintptr_t)&StackTop,             /* Top of Stack */
+    [ 1] = (uintptr_t)RTCoreMain,            /* Reset Handler */
+    [ 2] = (uintptr_t)NMI_Handler,           /* NMI Handler */
+    [ 3] = (uintptr_t)Hard_Fault_Handler,    /* Hard Fault Handler */
+    [ 4] = (uintptr_t)MPU_Fault_Handler,     /* MPU Fault Handler */
+    [ 5] = (uintptr_t)Bus_Fault_Handler,     /* Bus Fault Handler */
+    [ 6] = (uintptr_t)Usage_Fault_Handler,   /* Usage Fault Handler */
+    [11] = (uintptr_t)SVCall__Handler,       /* SVCall Handler */
+    [12] = (uintptr_t)Debug_Monitor_Handler, /* Debug Monitor Handler */
+    [14] = (uintptr_t)Pend_SV__Handler,      /* PendSV Handler */
+    [15] = (uintptr_t)Sys_Tick_Handler,      /* SysTick Handler */
 };
 

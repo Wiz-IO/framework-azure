@@ -243,7 +243,7 @@ int mtk_os_hal_uart_ctlr_init(UART_PORT port_num)
 	mtk_mhal_uart_sw_reset(ctlr_rtos->ctlr);
 	mtk_mhal_uart_enable_clk(ctlr_rtos->ctlr);
 
-	mtk_mhal_uart_hw_init(ctlr_rtos->ctlr);
+	return mtk_mhal_uart_hw_init(ctlr_rtos->ctlr); // WizIO
 
 	return 0;
 }
@@ -400,7 +400,7 @@ static int _mtk_os_hal_uart_dma_tx_callback(void *data)
 	struct mtk_uart_controller_rtos *ctlr_rtos = data;
 
 	ctlr_rtos->xTX_Queue++;
-	printf("_mtk_os_hal_uart_dma_tx_callback\r\n");
+	OS_DEBUG("_mtk_os_hal_uart_dma_tx_callback\r\n");
 	return 0;
 }
 
@@ -409,7 +409,7 @@ static int _mtk_os_hal_uart_dma_rx_callback(void *data)
 	struct mtk_uart_controller_rtos *ctlr_rtos = data;
 
 	ctlr_rtos->xRX_Queue++;
-	printf("_mtk_os_hal_uart_dma_rx_callback\r\n");
+	OS_DEBUG("_mtk_os_hal_uart_dma_rx_callback\r\n");
 	return 0;
 }
 
@@ -445,7 +445,7 @@ u32 mtk_os_hal_uart_dma_send_data(UART_PORT port_num,
 		return -UART_EPTR;
 
 	if (len >= 0x4000) {
-		printf("DMA max transfter size is 0x4000\n");
+		OS_DEBUG("DMA max transfter size is 0x4000\n");
 		return -UART_EINVAL;
 	}
 
@@ -472,11 +472,11 @@ u32 mtk_os_hal_uart_dma_send_data(UART_PORT port_num,
 	mtk_mhal_uart_start_dma_tx(ctlr);
 
 	cnt = len / (ctlr->baudrate / 10) + 1000;
-	printf("UART TX DMA Len:%d, timeout:%dms\n", len, cnt);
+	OS_DEBUG("UART TX DMA Len:%d, timeout:%dms\n", len, cnt);
 
 	ret = _mtk_os_hal_uart_wait_for_tx_done(ctlr_rtos, cnt);
 	if (ret) {
-		printf("Take UART TX Semaphore timeout!\n");
+		OS_DEBUG("Take UART TX Semaphore timeout!\n");
 		mtk_mhal_uart_stop_dma_tx(ctlr);
 	}
 
@@ -485,7 +485,7 @@ u32 mtk_os_hal_uart_dma_send_data(UART_PORT port_num,
 
 	mtk_mhal_uart_set_dma(ctlr, false);
 
-	printf("tx_size: %d\n", ctlr->mdata->tx_size);
+	OS_DEBUG("tx_size: %d\n", ctlr->mdata->tx_size);
 
 	return ctlr->mdata->tx_size;
 }
@@ -504,7 +504,7 @@ u32 mtk_os_hal_uart_dma_get_data(UART_PORT port_num,
 		return -UART_EPTR;
 
 	if (len >= 0x4000) {
-		printf("DMA max transfter size is 0x4000\n");
+		OS_DEBUG("DMA max transfter size is 0x4000\n");
 		return -UART_EINVAL;
 	}
 
@@ -531,11 +531,11 @@ u32 mtk_os_hal_uart_dma_get_data(UART_PORT port_num,
 	mtk_mhal_uart_start_dma_rx(ctlr);
 
 	cnt = len / (ctlr->baudrate / 10) + 5000;
-	printf("UART RX DMA Len:%d, timeout:%dms\n", len, cnt);
+	OS_DEBUG("UART RX DMA Len:%d, timeout:%dms\n", len, cnt);
 
 	ret = _mtk_os_hal_uart_wait_for_rx_done(ctlr_rtos, cnt);
 	if (ret) {
-		printf("Take UART RX Semaphore timeout!\n");
+		OS_DEBUG("Take UART RX Semaphore timeout!\n");
 		mtk_mhal_uart_stop_dma_rx(ctlr);
 	}
 
@@ -544,7 +544,7 @@ u32 mtk_os_hal_uart_dma_get_data(UART_PORT port_num,
 
 	mtk_mhal_uart_set_dma(ctlr, false);
 
-	printf("rx_size: %d!\n", ctlr->mdata->rx_size);
+	OS_DEBUG("rx_size: %d!\n", ctlr->mdata->rx_size);
 
 	return ctlr->mdata->rx_size;
 }

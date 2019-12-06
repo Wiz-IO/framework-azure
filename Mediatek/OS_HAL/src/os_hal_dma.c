@@ -171,7 +171,7 @@ int mtk_os_hal_dma_alloc_chan(u8 chn)
 		ctrl_rtos->ctlr->chn_type =
 			_mtk_os_hal_dma_get_chn_type(chn);
 		if (ctrl_rtos->ctlr->chn_type == -1) {
-			printf("invalid dma channel number: %d\n", chn);
+			OS_DEBUG("invalid dma channel number: %d\n", chn);
 			return -EPARAM;
 		}
 
@@ -182,9 +182,9 @@ int mtk_os_hal_dma_alloc_chan(u8 chn)
 
 		ctrl_rtos->status = RUNNING;
 	} else {
-		printf("chn %d is being used\n", chn);
+		OS_DEBUG("chn %d is being used\n", chn);
 		if (ctrl_rtos->ctlr != NULL) {
-			printf("chn(%d) status(%d)\n", ctrl_rtos->ctlr->chn,
+			OS_DEBUG("chn(%d) status(%d)\n", ctrl_rtos->ctlr->chn,
 				   ctrl_rtos->status);
 		}
 		ret = -EBUSY;
@@ -217,7 +217,7 @@ int mtk_os_hal_dma_config(u8 chn, struct dma_setting *setting)
 
 	ctrl = ctrl_rtos->ctlr;
 	if (ctrl == NULL) {
-		printf("dma channel has not been allocated!\n");
+		OS_DEBUG("dma channel has not been allocated!\n");
 		return -EPTR;
 	}
 
@@ -363,7 +363,7 @@ int mtk_os_hal_dma_register_isr(u8 chn, dma_interrupt_callback isr_cb,
 		ctrl_rtos->interrupt_2.cb_data = cb_data;
 		break;
 	default:
-		printf("unknown dma isr_type %d\n", isr_type);
+		OS_DEBUG("unknown dma isr_type %d\n", isr_type);
 		return -EPARAM;
 	}
 
@@ -439,7 +439,7 @@ int mtk_os_hal_dma_release_chan(u8 chn)
 
 	ret = mtk_mhal_dma_stop(ctrl_rtos->ctlr);
 	if (ret) {
-		printf("stop dma fail!\n");
+		OS_DEBUG("stop dma fail!\n");
 		return ret;
 	}
 

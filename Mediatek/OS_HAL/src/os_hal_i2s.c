@@ -129,7 +129,7 @@ int mtk_os_hal_request_i2s(i2s_no i2s_port)
 	i2s_ctrl_cfg->i2s_ctrl.i2s_rxdma_chnum = i2s_dma_ch_num[i2s_port][1];
 	result = mtk_mhal_i2s_alloc_vfifo_ch(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s allocate DMA fail :\n");/* error handle */
+		OS_DEBUG("i2s allocate DMA fail :\n");/* error handle */
 		return -EPTR;
 	}
 
@@ -177,7 +177,7 @@ int mtk_os_hal_free_i2s(i2s_no i2s_port)
 	i2s_ctrl_cfg->i2s_ctrl.i2s_rxdma_chnum = i2s_dma_ch_num[i2s_port][1];
 	result = mtk_mhal_i2s_release_vfifo_ch(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s release DMA fail :\n");/* error handle */
+		OS_DEBUG("i2s release DMA fail :\n");/* error handle */
 		return -EPTR;
 	}
 
@@ -223,7 +223,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 	result = mtk_mhal_i2s_cfg_type(&i2s_ctrl_cfg->i2s_ctrl,
 				       parameter->i2s_initial_type);
 	if (result != 0) {
-		printf("i2s config type fail :\n");/* error handle */
+		OS_DEBUG("i2s config type fail :\n");/* error handle */
 		return result;
 	}
 
@@ -250,7 +250,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 
 	result = mtk_mhal_i2s_set_config(&i2s_ctrl_cfg->i2s_ctrl, &i2s_config);
 	if (result != 0) {
-		printf("i2s set config fail :\n");/* error handle */
+		OS_DEBUG("i2s set config fail :\n");/* error handle */
 		return result;
 	}
 	/*configure VFIFO*/
@@ -259,7 +259,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 	i2s_ctrl_cfg->rx_period_len = parameter->rx_period_len;
 	if (parameter->tx_callback_func == NULL ||
 	    parameter->rx_callback_func == NULL) {
-		printf("callback function is NULL:\n");/* error handle */
+		OS_DEBUG("callback function is NULL:\n");/* error handle */
 		return -EPTR;
 	}
 	i2s_ctrl_cfg->tx_callback_func = parameter->tx_callback_func;
@@ -277,7 +277,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 					_mtk_os_hal_i2s1_tx_callback);
 
 	if (result != 0) {
-		printf("i2s config tx irq enable fail :\n");
+		OS_DEBUG("i2s config tx irq enable fail :\n");
 		/* error handle */
 		return result;
 	}
@@ -290,7 +290,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 					&i2s_ctrl_cfg->i2s_ctrl,
 					_mtk_os_hal_i2s1_rx_callback);
 	if (result != 0) {
-		printf("i2s config rx irq enable fail :\n");
+		OS_DEBUG("i2s config rx irq enable fail :\n");
 		/* error handle */
 		return result;
 	}
@@ -299,7 +299,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 					     1,
 					     parameter->tx_buffer_len);
 	if (result != 0) {
-		printf("i2s tx vfifo setup fail :\n");/* error handle */
+		OS_DEBUG("i2s tx vfifo setup fail :\n");/* error handle */
 		return result;
 	}
 
@@ -308,7 +308,7 @@ int mtk_os_hal_config_i2s(i2s_no i2s_port, audio_parameter *parameter)
 					     parameter->rx_period_len - 1,
 					     parameter->rx_buffer_len);
 	if (result != 0) {
-		printf("i2s rx vfifo setup fail :\n");/* error handle */
+		OS_DEBUG("i2s rx vfifo setup fail :\n");/* error handle */
 		return result;
 	}
 
@@ -333,19 +333,19 @@ int mtk_os_hal_enable_i2s(i2s_no i2s_port)
 
 	result = mtk_mhal_i2s_enable_audio_top(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s audio top enable fail :\n");
+		OS_DEBUG("i2s audio top enable fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_enable_tx(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s tx enable fail :\n");
+		OS_DEBUG("i2s tx enable fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_enable_rx(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s rx enable fail :\n");
+		OS_DEBUG("i2s rx enable fail :\n");
 		/* error handle */
 		return result;
 	}
@@ -369,37 +369,37 @@ int mtk_os_hal_disable_i2s(i2s_no i2s_port)
 	i2s_ctrl_cfg->i2s_ctrl.i2s_no = i2s_port;
 	result = mtk_mhal_i2s_stop_tx_vfifo(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s tx dma stop fail :\n");
+		OS_DEBUG("i2s tx dma stop fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_stop_rx_vfifo(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s rx dma stop fail :\n");
+		OS_DEBUG("i2s rx dma stop fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_disable_tx(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s tx disable fail :\n");
+		OS_DEBUG("i2s tx disable fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_disable_rx(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s rx disable fail :\n");
+		OS_DEBUG("i2s rx disable fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_disable_audio_top(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s audio top disable fail :\n");
+		OS_DEBUG("i2s audio top disable fail :\n");
 		/* error handle */
 		return result;
 	}
 	result = mtk_mhal_i2s_reset(&i2s_ctrl_cfg->i2s_ctrl);
 	if (result != 0) {
-		printf("i2s reset fail :\n");
+		OS_DEBUG("i2s reset fail :\n");
 		/* error handle */
 		return result;
 	}

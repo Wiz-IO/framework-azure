@@ -2,70 +2,101 @@
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
+#include <unistd.h>
+
+void __attribute__((weak)) LogToUart(const char *format, ...);
+void __attribute__((weak)) mon_putchar(char c); /* used for OS_DEBUG */
 
 #undef errno
 extern int errno;
 extern int _end;
 
-extern caddr_t _sbrk(int incr);
-extern int link(char *old, char *new);
-extern int _close(int file);
-extern int _fstat(int file, struct stat *st);
-extern int _isatty(int file);
-extern int _lseek(int file, int ptr, int dir);
-extern void _exit(int status);
-extern void _kill(int pid, int sig);
-extern int _getpid(void);
-
-extern caddr_t _sbrk(int incr)
+void abort(void)
 {
-    return (caddr_t)-1;
+    LogToUart("[ABORT]\n");
+    while (1)
+        ;
 }
 
-extern int link(char *old, char *new)
-{
-    return -1;
-}
+void _exit(int status) { abort(); }
 
-extern int _close(int file)
-{
-    return -1;
-}
+caddr_t _sbrk(int incr) { return (caddr_t)-1; }
 
-extern int _fstat(int file, struct stat *st)
-{
-    st->st_mode = S_IFCHR;
+void _kill(int pid, int sig) { return; }
 
-    return 0;
-}
+int _getpid(void) { return -1; }
 
-extern int _isatty(int file)
-{
-    return 1;
-}
+int _getpid_r(void) { return -1; }
 
-extern int _lseek(int file, int ptr, int dir)
-{
-    return 0;
-}
+int link(const char *old, const char *new) { return -1; }
 
-extern void _exit(int status)
+int _close(int file) { return -1; }
+
+int _read(int file, char *ptr, int len) { return 0; }
+
+/* enable OS_DEBUG */
+#ifdef RETARGET
+
+int _write(int file, char *buf, int nbytes)
 {
-    for (;;)
+    /* We only handle stdout and stderr */
+    if ((file != STDOUT_FILENO) && (file != STDERR_FILENO))
     {
+        errno = EBADF;
+        return -1;
+    }
+    /* Output character at at time */
+    for (int i = 0; i < nbytes; i++)
+        mon_putchar(buf[i]);
+    return nbytes;
+}
+
+int _fstat(int file, struct stat *st)
+{
+    if ((STDOUT_FILENO == file) || (STDERR_FILENO == file))
+    {
+        st->st_mode = S_IFCHR;
+        return 0;
+    }
+    else
+    {
+        errno = EBADF;
+        return -1;
     }
 }
 
-extern void _kill(int pid, int sig)
+int _isatty(int file)
 {
-    return;
+    if ((file == STDOUT_FILENO) || (file == STDERR_FILENO))
+    {
+        return 1;
+    }
+    else
+    {
+        errno = EBADF;
+        return -1;
+    }
 }
 
-extern int _getpid(void)
+int _lseek(int file, int offset, int whence)
 {
-    return -1;
+    if ((STDOUT_FILENO == file) || (STDERR_FILENO == file))
+    {
+        return 0;
+    }
+    else
+    {
+        errno = EBADF;
+        return (long)-1;
+    }
 }
 
-void STD_Init(void) {
+#else
 
-}
+int _write(int file, char *buf, int nbytes) { return 0; }
+int _fstat(int file, struct stat *st) { return -1; }
+int _isatty(int file) { return -1; }
+int _lseek(int file, int offset, int whence) { return (long)-1; }
+
+#endif

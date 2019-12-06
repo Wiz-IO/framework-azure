@@ -39,7 +39,7 @@
 #include <nvic.h>
 #include <irq.h>
 
-#define OS_WDT_LOG(string, args...)	printf("[os_wdt]"string, ##args)
+#define OS_WDT_LOG(string, args...)	OS_DEBUG("[os_wdt]"string, ##args)
 
 struct os_wdt_dev {
 	struct hal_wdt_dev	hal_dev;
